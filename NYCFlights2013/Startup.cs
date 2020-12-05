@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +24,7 @@ namespace NYCFlights2013
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			//IServiceCollection serviceCollections = services.AddDbContext<DbContext>(options => options.UseMySql("server=127.0.0.1;database=flight;user=root;password=123456"));
 			services.AddControllersWithViews();
 		}
 
