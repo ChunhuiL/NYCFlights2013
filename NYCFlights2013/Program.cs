@@ -13,7 +13,6 @@ namespace NYCFlights2013
 	{
 		public static void Main(string[] args)
 		{
-			dataconn.Main();
 			CreateHostBuilder(args).Build().Run();
 		}
 

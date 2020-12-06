@@ -1,7 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	// First, we recreate the table headers from the Database (and CSV) and
+	// make them into a String array. Credits for tutorial: youtu.be/s3o8iuoDMyI
+	ViewData["Title"] = "Home Page";
+	@model NYCFlights2013.Models.Airlines
+	var airlines = (List<Airlines>)ViewData["airlines"];
+	//@model IEnumerable<MvcMovie.Models.Movie>
+	string[] ChartHeadersFlights = new string[] {
+	"Year",
+	"Month",
+	"Day",
+	"Departure Time",
+	"Departure Delay",
+	"Arrival Time",
+	"Arrival Delay",
+	"Carrier",
+	"Tail Number",
+	"Flight",
+	"Origin",
+	"Destination",
+	"Air Time",
+	"Distance",
+	"Hour",
+	"Minute"};
 }
-
 <div class="text-center">
 	<h1 class="display-4">Welcome</h1>
 	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -19,27 +40,54 @@
 			</div>
 		</div>
 	</section>
-	<script type="text/javascript">var myEChart = echarts.init(document.getElementById('myechart'));    
-    //指定图标的配置和数据
-    var option = {
-        title: {
-            text: 'ECharts '
-        },
-        tooltip: {},
-        legend: {
-            data: ['resource']
-        },
-        xAxis: {
-            data: ["Android", "IOS", "PC", "Ohter"]
-        },
-        yAxis: {},
-        series: [{
-            name: 'numbers',
-            type: 'line',
-            data: [500, 200, 360, 100]
-        }]
-    };
-    //使用制定的配置项和数据显示图表
-    myEChart.setOption(option);</script>
 
-</div>
+	<table>
+		<thead>
+			<tr>
+				@{
+					foreach (var head in ChartHeadersFlights)
+					{
+						<th>
+							@head
+						</th>
+					}
+					}
+				</tr>
+			</thead>
+		<tbody>
+			<tr>
+			@{ foreach (var air in airlines)
+				{
+					<td>
+						@air.carrier
+					</td>
+  				}
+			}
+		</tr>
+		</tbody>
+		</table>
+					<script type="text/javascript">
+						var myEChart = echarts.init(document.getElementById('myechart'));
+						//指定图标的配置和数据
+						var option = {
+							title: {
+								text: 'ECharts '
+							},
+							tooltip: {},
+							legend: {
+								data: ['resource']
+					},
+							xAxis: {
+								data: ['data']
+				},
+							yAxis: {},
+							series: [{
+					name: 'numbers',
+								type: 'bar',
+								data: [500, 200, 360, 100]
+							}]
+						};
+				//使用制定的配置项和数据显示图表
+				myEChart.setOption(option);</script>
+
+	</div>

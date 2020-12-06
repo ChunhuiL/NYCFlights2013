@@ -50,9 +50,11 @@ namespace NYCFlights2013
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapControllerRoute(name: "flight",
+				pattern: "{controller=Flight}/{action=Index}");
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Home}/{action=Flight}/{id?}");
+					pattern: "{controller=Flight}/{action=Index}/{id?}");
 			});
 		}
 	}
