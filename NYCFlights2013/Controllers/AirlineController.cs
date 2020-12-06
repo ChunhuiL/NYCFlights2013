@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NYCFlights2013.Controllers
 {
-    public class FlightController : Controller
+    public class AirlineController : Controller
     {
         private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
         public IActionResult Index()
@@ -19,7 +19,7 @@ namespace NYCFlights2013.Controllers
             var airlines = GetAllAirlines();
 
             ViewData["airlines"] = airlines;
-            return View("~/Views/Home/Flight.cshtml");
+            return View("~/Views/Home/Airline.cshtml");
 
         }
 
