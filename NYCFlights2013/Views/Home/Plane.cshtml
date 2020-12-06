@@ -1,8 +1,8 @@
 ﻿@{
-	ViewData["Title"] = "Weather Page";
-	@model NYCFlights2013.Models.Weather
-	var weather = (List<Weather>)ViewData["weather"];
-	string[] ChartHeadersWeather = new string[] {
+	ViewData["Title"] = "Plane Page";
+	@model NYCFlights2013.Models.Planes
+	var planes = (List<Planes>)ViewData["planes"];
+	string[] ChartHeadersPlanes = new string[] {
 	"Year",
 	"Month",
 	"Day",
@@ -42,7 +42,7 @@
 		<thead>
 			<tr>
 				@{
-					foreach (var head in ChartHeadersWeather)
+					foreach (var head in ChartHeadersPlanes)
 					{
 						<th>
 							@head
@@ -53,10 +53,10 @@
 		</thead>
 		<tbody>
 			<tr>
-				@{ foreach (var air in weather)
+				@{ foreach (var air in planes)
 					{
 						<td>
-							@air.origin
+							@air.tailnum
 						</td>
 					}
 					// TODO: Complete table.

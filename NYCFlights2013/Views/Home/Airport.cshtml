@@ -1,8 +1,8 @@
 ﻿@{
-	ViewData["Title"] = "Weather Page";
-	@model NYCFlights2013.Models.Weather
-	var weather = (List<Weather>)ViewData["weather"];
-	string[] ChartHeadersWeather = new string[] {
+	ViewData["Title"] = "Home Page";
+	@model NYCFlights2013.Models.Airports
+	var airports = (List<Airports>)ViewData["airports"];
+	string[] ChartHeadersAirports = new string[] {
 	"Year",
 	"Month",
 	"Day",
@@ -42,7 +42,7 @@
 		<thead>
 			<tr>
 				@{
-					foreach (var head in ChartHeadersWeather)
+					foreach (var head in ChartHeadersAirports)
 					{
 						<th>
 							@head
@@ -53,10 +53,10 @@
 		</thead>
 		<tbody>
 			<tr>
-				@{ foreach (var air in weather)
+				@{ foreach (var air in airports)
 					{
 						<td>
-							@air.origin
+							@air.faa;
 						</td>
 					}
 					// TODO: Complete table.
@@ -65,27 +65,27 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		var myEChart = echarts.init(document.getElementById('myechart'));
-		//指定图标的配置和数据
-		var option = {
-			title: {
-				text: 'ECharts '
-			},
-			tooltip: {},
-			legend: {
-				data: ['resource']
-			},
-			xAxis: {
-				data: ['data']
-			},
-			yAxis: {},
-			series: [{
-				name: 'numbers',
-				type: 'bar',
-				data: [500, 200, 360, 100]
-			}]
-		};
-		//使用制定的配置项和数据显示图表
-		myEChart.setOption(option);</script>
+						var myEChart = echarts.init(document.getElementById('myechart'));
+						//指定图标的配置和数据
+						var option = {
+							title: {
+								text: 'ECharts '
+							},
+							tooltip: {},
+							legend: {
+								data: ['resource']
+					},
+							xAxis: {
+								data: ['data']
+				},
+							yAxis: {},
+							series: [{
+					name: 'numbers',
+								type: 'bar',
+								data: [500, 200, 360, 100]
+							}]
+						};
+				//使用制定的配置项和数据显示图表
+				myEChart.setOption(option);</script>
 
 </div>

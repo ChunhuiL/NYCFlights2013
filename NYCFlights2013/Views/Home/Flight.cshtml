@@ -1,10 +1,7 @@
 ﻿@{
-	// First, we recreate the table headers from the Database (and CSV) and
-	// make them into a String array. Credits for tutorial: youtu.be/s3o8iuoDMyI
-	ViewData["Title"] = "Home Page";
-	@model NYCFlights2013.Models.Airlines
-	var airlines = (List<Airlines>)ViewData["airlines"];
-	//@model IEnumerable<MvcMovie.Models.Movie>
+	ViewData["Title"] = "Flight Page";
+	@model NYCFlights2013.Models.Flights
+	var flights = (List<Flights>)ViewData["flights"];
 	string[] ChartHeadersFlights = new string[] {
 	"Year",
 	"Month",
@@ -21,7 +18,7 @@
 	"Air Time",
 	"Distance",
 	"Hour",
-	"Minute"};
+	"Minute"};             //TODO: Use appropriate fields.
 }
 <div class="text-center">
 	<h1 class="display-4">Welcome</h1>
@@ -56,12 +53,13 @@
 			</thead>
 		<tbody>
 			<tr>
-			@{ foreach (var air in airlines)
+			@{ foreach (var air in flights)
 				{
 					<td>
-						@air.carrier
+						@air.year
 					</td>
-  				}
+				}
+				// TODO: Complete table.
 			}
 		</tr>
 		</tbody>
