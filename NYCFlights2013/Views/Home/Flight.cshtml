@@ -38,32 +38,7 @@
 		</div>
 	</section>
 
-	<table>
-		<thead>
-			<tr>
-				@{
-					foreach (var head in ChartHeadersFlights)
-					{
-						<th>
-							@head
-						</th>
-					}
-					}
-				</tr>
-			</thead>
-		<tbody>
-			<tr>
-			@{ foreach (var air in flights)
-				{
-					<td>
-						@air.year
-					</td>
-				}
-				// TODO: Complete table.
-			}
-		</tr>
-		</tbody>
-		</table>
+	
 					<script type="text/javascript">
 						var myEChart = echarts.init(document.getElementById('myechart'));
 						//指定图标的配置和数据
@@ -76,12 +51,12 @@
 								data: ['resource']
 					},
 							xAxis: {
-								data: ['data']
+                                data: ['a', 'a', 'a', 'a']
 				},
 							yAxis: {},
 							series: [{
 					name: 'numbers',
-								type: 'bar',
+                                type: 'pie',
 								data: [500, 200, 360, 100]
 							}]
 						};
