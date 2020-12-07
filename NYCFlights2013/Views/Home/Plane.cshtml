@@ -1,0 +1,66 @@
+﻿@{
+	ViewData["Title"] = "Plane Page";
+	@model NYCFlights2013.Models.Planes
+	var planes = (List<Planes>)ViewData["planes"];
+	string[] ChartHeadersPlanes = new string[] {
+	"Year",
+	"Month",
+	"Day",
+	"Departure Time",
+	"Departure Delay",
+	"Arrival Time",
+	"Arrival Delay",
+	"Carrier",
+	"Tail Number",
+	"Flight",
+	"Origin",
+	"Destination",
+	"Air Time",
+	"Distance",
+	"Hour",
+	"Minute"};          //TODO: Use appropriate fields.
+}
+<div class="text-center">
+	<h1 class="display-4">Welcome</h1>
+	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<section class="content-header">
+		<h1>Echarts</h1>
+	</section>
+	<script src="~/lib/jquery/dist/jquery.js"></script>
+	<script src="~/lib/echarts/echarts.js"></script>
+	<section class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div id="myechart" style="width: 100%; height: 500px;">
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	
+	<script type="text/javascript">
+		var myEChart = echarts.init(document.getElementById('myechart'));
+		//指定图标的配置和数据
+		var option = {
+			title: {
+				text: 'ECharts '
+			},
+			tooltip: {},
+			legend: {
+				data: ['resource']
+			},
+			xAxis: {
+                data: ['a', 'a', 'a', 'a']
+			},
+			yAxis: {},
+			series: [{
+				name: 'numbers',
+				type: 'bar',
+				data: [500, 200, 360, 100]
+			}]
+		};
+		//使用制定的配置项和数据显示图表
+		myEChart.setOption(option);</script>
+
+</div>
