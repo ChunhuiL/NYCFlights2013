@@ -2,95 +2,76 @@
 	ViewData["Title"] = "Flight Page";
 	@model NYCFlights2013.Models.Flights
 	var flights = (List<Flights>)ViewData["flights"];
-    var numOfFlightsM= (List<Flights>)ViewData["numOfFlightsM"];
+	var numOfFlightsM = (List<Flights>)ViewData["numOfFlightsM"];
 
-    string[] ChartHeadersFlights = new string[] {
-    "Year",
-    "Month",
-    "Day",
-    "Departure Time",
-    "Departure Delay",
-    "Arrival Time",
-    "Arrival Delay",
-    "Carrier",
-    "Tail Number",
-    "Flight",
-    "Origin",
-    "Destination",
-    "Air Time",
-    "Distance",
-    "Hour",
-    "Minute"};             //TODO: Use appropriate fields.
+	string[] ChartHeadersFlights = new string[] {
+	"Year",
+	"Month",
+	"Day",
+	"Departure Time",
+	"Departure Delay",
+	"Arrival Time",
+	"Arrival Delay",
+	"Carrier",
+	"Tail Number",
+	"Flight",
+	"Origin",
+	"Destination",
+	"Air Time",
+	"Distance",
+	"Hour",
+	"Minute"};             //TODO: Use appropriate fields.
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <section class="content-header">
-        <h1>Echarts</h1>
-    </section>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/echarts/echarts.js"></script>
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="myechart" style="width: 100%; height: 500px;">
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/javascript">
+		window.onload = function () {
+			var chart = new CanvasJS.Chart("chartContainer",
+				{
+					title: {
+						text: "Number of Flights per month"
+					},
+					axisY: {
+						title: ""
+					},
+					legend: {
+						verticalAlign: "bottom",
+						horizontalAlign: "center"
+					},
+					data: [
 
-                </div>
-            </div>
-        </div>
-    </section>
-    <table>
-        <thead>
-            <tr>
-                @{
-                    foreach (var num in numOfFlightsM)
-                    {
-                        <th>
-                            @num.month
-                        </th>
-                    }
-                }
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                @{ foreach (var num in numOfFlightsM)
-                    {
-                        <td>
-                            @num.number
-                        </td>
-                    }
-                }
-            </tr>
-        </tbody>
-    </table>
+						{
+							color: "#B0D0B0",
+							type: "column",
+							showInLegend: true,
+							legendMarkerType: "none",
+							legendText: "",
+							dataPoints: [
+								{ x: 1, y: @numOfFlightsM[0].number, label: "Jan" },
+								{ x: 2, y: @numOfFlightsM[1].number, label: "Feb" },
+								{ x: 3, y: @numOfFlightsM[2].number, label: "Mar" },
+								{ x: 4, y: @numOfFlightsM[3].number, label: "Apr" },
+								{ x: 5, y: @numOfFlightsM[4].number, label: "May" },
+								{ x: 6, y: @numOfFlightsM[5].number, label: "Jun" },
+								{ x: 7, y: @numOfFlightsM[6].number, label: "Jul" },
+								{ x: 8, y: @numOfFlightsM[7].number, label: "Aug" },
+								{ x: 9, y: @numOfFlightsM[8].number, label: "Sep" },
+								{ x: 10, y: @numOfFlightsM[9].number, label: "Oct" },
+								{ x: 11, y: @numOfFlightsM[10].number, label: "Nov" },
+								{ x: 12, y: @numOfFlightsM[11].number, label: "Dec" },
+							]
+						}
+					]
+				});
 
-    <script type="text/javascript">
-        var myEChart = echarts.init(document.getElementById('myechart'));
-        var option = {
-            title: {
-                text: 'ECharts '
-            },
-            tooltip: {},
-            legend: {
-                data: ['resource']
-            },
-            xAxis: {
-                data: ['1', '2', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', '12']
-            },
-            yAxis: {},
-            series: [{
-                name: 'numbers',
-                type: 'bar',
-                data:  @{ foreach (var num in numOfFlightsM)
-                    {
-                        <td>
-                            @num.number
-                        </td>
-                    }
-                }
-            }]
-        };
-        myEChart.setOption(option);</script>
-
-</div>
+			chart.render();
+		}
+	</script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+	<div id="chartContainer" style="height: 300px; width: 100%;">
+	</div>
+</body>
+</html>
