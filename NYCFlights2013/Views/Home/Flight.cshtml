@@ -2,23 +2,25 @@
 	ViewData["Title"] = "Flight Page";
 	@model NYCFlights2013.Models.Flights
 	var flights = (List<Flights>)ViewData["flights"];
-	string[] ChartHeadersFlights = new string[] {
-	"Year",
-	"Month",
-	"Day",
-	"Departure Time",
-	"Departure Delay",
-	"Arrival Time",
-	"Arrival Delay",
-	"Carrier",
-	"Tail Number",
-	"Flight",
-	"Origin",
-	"Destination",
-	"Air Time",
-	"Distance",
-	"Hour",
-	"Minute"};             //TODO: Use appropriate fields.
+    var numOfFlightsM= (List<Flights>)ViewData["flights"];
+
+    string[] ChartHeadersFlights = new string[] {
+    "Year",
+    "Month",
+    "Day",
+    "Departure Time",
+    "Departure Delay",
+    "Arrival Time",
+    "Arrival Delay",
+    "Carrier",
+    "Tail Number",
+    "Flight",
+    "Origin",
+    "Destination",
+    "Air Time",
+    "Distance",
+    "Hour",
+    "Minute"};             //TODO: Use appropriate fields.
 }
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -52,10 +54,10 @@
         </thead>
         <tbody>
             <tr>
-                @{ foreach (var fli in flights)
+                @{ foreach (var num in numOfFlightsM)
                     {
                         <td>
-                            @fli.year
+                            @num.number
                         </td>
                     }
                     // TODO: Complete table.
@@ -76,13 +78,20 @@
                 data: ['resource']
             },
             xAxis: {
-                data: ['a', 'a', 'a', 'a']
+                data: ['1', '2', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', '12']
             },
             yAxis: {},
             series: [{
                 name: 'numbers',
-                type: 'pie',
-                data: [500, 200, 360, 100]
+                type: 'bar',
+                data:  @{ foreach (var num in numOfFlightsM)
+                    {
+                        <td>
+                            @num.number
+                        </td>
+                    }
+                    // TODO: Complete table.
+                }
             }]
         };
         //使用制定的配置项和数据显示图表

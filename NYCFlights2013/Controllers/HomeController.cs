@@ -22,7 +22,7 @@ namespace NYCFlights2013.Controllers
 		{
 			return View();
 		}
-
+		
 		public IActionResult Plane()
 		{
 			return View();
