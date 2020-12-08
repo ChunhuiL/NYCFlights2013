@@ -19,6 +19,7 @@ namespace NYCFlights2013.Controllers
             var flights = GetAllFlights();
             var numOfFlightsM = GetNumOfFlightsM();
             ViewData["flights"] = flights;
+            ViewData["numOfFlightsM"] = numOfFlightsM;
             return View("~/Views/Home/Flight.cshtml");
 
         }
@@ -75,7 +76,7 @@ namespace NYCFlights2013.Controllers
 
         public List<Flights> GetNumOfFlightsM()
         {
-            var numOfFlightsM = new List<Flights>();
+            List<Flights> numOfFlightsM = new List<Flights>();
             //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
@@ -104,12 +105,6 @@ namespace NYCFlights2013.Controllers
             {
                 Console.WriteLine(ex.ToString());
             }
-            string myNum=null;
-            foreach (var num in numOfFlightsM)
-            {
-                myNum = num.month;
-            }
-            Console.WriteLine(myNum ) ;
             return numOfFlightsM;
         }
     }

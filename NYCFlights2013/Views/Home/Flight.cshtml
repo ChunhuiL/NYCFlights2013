@@ -2,7 +2,7 @@
 	ViewData["Title"] = "Flight Page";
 	@model NYCFlights2013.Models.Flights
 	var flights = (List<Flights>)ViewData["flights"];
-    var numOfFlightsM= (List<Flights>)ViewData["flights"];
+    var numOfFlightsM= (List<Flights>)ViewData["numOfFlightsM"];
 
     string[] ChartHeadersFlights = new string[] {
     "Year",
@@ -43,10 +43,10 @@
         <thead>
             <tr>
                 @{
-                    foreach (var head in ChartHeadersFlights)
+                    foreach (var num in numOfFlightsM)
                     {
                         <th>
-                            @head
+                            @num.month
                         </th>
                     }
                 }
