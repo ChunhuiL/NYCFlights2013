@@ -13,7 +13,7 @@ namespace NYCFlights2013.Controllers
 {
     public class FlightController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3305;password=123456";
+        private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
         public IActionResult Index()
         {
             var flights = GetAllFlights();
@@ -104,12 +104,13 @@ namespace NYCFlights2013.Controllers
             {
                 Console.WriteLine(ex.ToString());
             }
-            string myNum=null;
+            List<string> myNum = new List<string>();
+
             foreach (var num in numOfFlightsM)
             {
-                myNum = num.month;
+                myNum.Add(num.number);
             }
-            Console.WriteLine(myNum ) ;
+            Console.WriteLine(myNum) ; // This returns the last number of flights for December - 13388.
             return numOfFlightsM;
         }
     }
