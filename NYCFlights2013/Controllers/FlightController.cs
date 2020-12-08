@@ -64,6 +64,7 @@ namespace NYCFlights2013.Controllers
                     rdr.Close();
                     conn.Close();
                 }
+                //Todo: Extract data from rbr[1] - month and get the number of entries for that specific month
             }
 
             catch (Exception ex)
