@@ -64,7 +64,6 @@ namespace NYCFlights2013.Controllers
                     rdr.Close();
                     conn.Close();
                 }
-                //Todo: Extract data from rbr[1] - month and get the number of entries for that specific month
             }
 
             catch (Exception ex)
@@ -110,7 +109,7 @@ namespace NYCFlights2013.Controllers
             {
                 myNum = num.month;
             }
-            Console.WriteLine(myNum.ToString() ) ;
+            Console.WriteLine(myNum ) ;
             return numOfFlightsM;
         }
     }
