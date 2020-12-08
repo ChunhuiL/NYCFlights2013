@@ -23,7 +23,6 @@ namespace NYCFlights2013.Controllers
             return View("~/Views/Home/Flight.cshtml");
 
         }
-        //
         public List<Flights> GetAllFlights()
         {
             var flights = new List<Flights>();
