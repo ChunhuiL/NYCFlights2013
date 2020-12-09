@@ -18,16 +18,30 @@ namespace NYCFlights2013.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+		public IActionResult Flight()
+		{
+			return View();
+		}
+		
+		public IActionResult Plane()
 		{
 			return View();
 		}
 
-		public IActionResult Privacy()
+		public IActionResult Weather()
 		{
 			return View();
 		}
 
+		public IActionResult Airline()
+		{
+			return View();
+		}
+
+		public IActionResult Airport()
+		{
+			return View();
+		}
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

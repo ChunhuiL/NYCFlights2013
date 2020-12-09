@@ -1,0 +1,62 @@
+﻿@{
+	ViewData["Title"] = "Plane Page";
+	@model NYCFlights2013.Models.Planes
+	var planesNumM = (List<Planes>)ViewData["planesNumM"];
+	string[] ChartHeadersPlanes = new string[] {
+	"Year",
+	"Month",
+	"Day",
+	"Departure Time",
+	"Departure Delay",
+	"Arrival Time",
+	"Arrival Delay",
+	"Carrier",
+	"Tail Number",
+	"Flight",
+	"Origin",
+	"Destination",
+	"Air Time",
+	"Distance",
+	"Hour",
+	"Minute"};          //TODO: Use appropriate fields.
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <section class="content-header">
+        <h1>Echarts</h1>
+    </section>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/echarts/echarts.js"></script>
+    <section class="content">
+
+        <div>
+            <table class="table-bordered table-responsive">
+                <tr class="table-active">
+                    <td>model</td>
+                    <td>number</td>
+                </tr>
+
+
+                @{ foreach (var num in planesNumM)
+                    {
+                        <tr>
+                            <td class="table-info">
+                                @num.model
+                            </td>
+
+
+                            <td>
+                                @num.number
+                            </td>
+                        </tr>
+                    }
+                    // TODO: Complete table.
+                }
+
+
+            </table>
+
+        </div>
+    </section>
+    </div>

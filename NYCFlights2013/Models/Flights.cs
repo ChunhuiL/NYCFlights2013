@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NYCFlight2013.Model
+namespace NYCFlights2013.Models
 {
 	public class Flights
 	{
@@ -25,6 +25,11 @@ namespace NYCFlight2013.Model
 		public string distance { get; set; }
 		public string hour { get; set; }
 		public string minute { get; set; }
-
+		public string number { get; set; }
+		public string meantime { get; set; }
+		public string numberO { get; set; }
+		public string top10 { get; set; }
+		public string delayD { get; set; }
+		public string delayA { get; set; }
 	}
 }

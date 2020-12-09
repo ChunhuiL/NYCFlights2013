@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NYCFlight2013.Model
+namespace NYCFlights2013.Models
 {
 	public class Planes
 	{
@@ -18,5 +18,6 @@ namespace NYCFlight2013.Model
 		public string seats { get; set; }
 		public string speed { get; set; }
 		public string engine { get; set; }
+		public string number { get; set; }
 	}
 }
