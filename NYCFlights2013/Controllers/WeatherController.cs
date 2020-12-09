@@ -13,12 +13,14 @@ namespace NYCFlights2013.Controllers
 {
     public class WeatherController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3305;password=123456";
+        private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
         public IActionResult Index()
         {
             var weather = GetAllWeather();
+            var temp_attribute_celcius = GetWeatherTemp();
 
             ViewData["weather"] = weather;
+            ViewData["temp_attribute_celcius"] = temp_attribute_celcius;
             return View("~/Views/Home/Weather.cshtml");
 
         }
@@ -70,6 +72,41 @@ namespace NYCFlights2013.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return all_weather;
+        }
+        public List<Weather> GetWeatherTemp()
+        {
+            List<Weather> temp_attribute_celcius = new List<Weather>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS temp, month, year FROM weather";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        temp_attribute_celcius.Add(new Weather
+                        {
+                            origin = rdr[0].ToString(),
+                            temp = rdr[1].ToString(),
+                            month = rdr[2].ToString(),
+                            year = rdr[3].ToString()
+                        }) ;
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return temp_attribute_celcius;
         }
     }
 }
