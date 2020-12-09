@@ -249,7 +249,6 @@ namespace NYCFlights2013.Controllers
             {
                 Console.WriteLine(ex.ToString());
             }
-
             return meandelay;
         }
     }
