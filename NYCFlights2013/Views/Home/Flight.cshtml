@@ -6,71 +6,14 @@
     var meantimeO = (List<Flights>)ViewData["meantimeO"];
     var topdest = (List<Flights>)ViewData["topdest"];
     var meandelay = (List<Flights>)ViewData["meandelay"];
-    string[] ChartHeadersFlights = new string[] {
-    "Year",
-    "Month",
-    "Day",
-    "Departure Time",
-    "Departure Delay",
-    "Arrival Time",
-    "Arrival Delay",
-    "Carrier",
-    "Tail Number",
-    "Flight",
-    "Origin",
-    "Destination",
-    "Air Time",
-    "Distance",
-    "Hour",
-    "Minute"};             //TODO: Use appropriate fields.
-}
+    var numOfFlightsO = (List<Flights>)ViewData["numOfFlightsO"];
+
 <!DOCTYPE HTML>
 <html>
 <head>
-    @*    <script type="text/javascript">
-            window.onload = function () {
-                var chart = new CanvasJS.Chart("chartContainer",
-                    {
-                        title: {
-                            text: "Number of Flights per month"
-                        },
-                        axisY: {
-                            title: ""
-                        },
-                        legend: {
-                            verticalAlign: "bottom",
-                            horizontalAlign: "center"
-                        },
-                        data: [
-                            {
-                                color: "#B0D0B0",
-                                type: "column",
-                                showInLegend: true,
-                                legendMarkerType: "none",
-                                legendText: "",
-                                dataPoints: [
-                                    { x: 1, y: @numOfFlightsM[0].number, label: "Jan" },
-                                    { x: 2, y: @numOfFlightsM[1].number, label: "Feb" },
-                                    { x: 3, y: @numOfFlightsM[2].number, label: "Mar" },
-                                    { x: 4, y: @numOfFlightsM[3].number, label: "Apr" },
-                                    { x: 5, y: @numOfFlightsM[4].number, label: "May" },
-                                    { x: 6, y: @numOfFlightsM[5].number, label: "Jun" },
-                                    { x: 7, y: @numOfFlightsM[6].number, label: "Jul" },
-                                    { x: 8, y: @numOfFlightsM[7].number, label: "Aug" },
-                                    { x: 9, y: @numOfFlightsM[8].number, label: "Sep" },
-                                    { x: 10, y: @numOfFlightsM[9].number, label: "Oct" },
-                                    { x: 11, y: @numOfFlightsM[10].number, label: "Nov" },
-                                    { x: 12, y: @numOfFlightsM[11].number, label: "Dec" },
-                                ]
-                            }
-                        ]
-                    });
-                chart.render();
-            }
-        </script>*@
     <script type="text/javascript">
 		window.onload = function () {
-			var chart = new CanvasJS.Chart("chartContainer",
+			var chart1 = new CanvasJS.Chart("chartContainer1",
 				{
 					title: {
 						text: "Top 10 dest"
@@ -104,8 +47,8 @@
 						}
 					]
 				});
-            chart.render();
-            var chart1 = new CanvasJS.Chart("chartContainer",
+            chart1.render();
+            var chart2 = new CanvasJS.Chart("chartContainer2",
                     {
                         title: {
                             text: "Number of Flights per month"
@@ -141,7 +84,86 @@
                             }
                         ]
                     });
-                chart1.render();
+            chart2.render();
+             var chart3 = new CanvasJS.Chart("chartContainer3",
+                    {
+                        title: {
+                            text: "Number of Flights per month by Origin"
+                        },
+                        axisY: {
+                            title: ""
+                        },
+                        legend: {
+                            verticalAlign: "bottom",
+                            horizontalAlign: "center"
+                        },
+                        data: [
+                            {
+                                color: "#B0D0B0",
+                                type: "column",
+                                showInLegend: true,
+                                legendMarkerType: "none",
+                                legendText: "",
+                                dataPoints: [
+                                    { x: 1, y: @numOfFlightsO[0].numberO, label: "Jan" },
+                                    { x: 2, y: @numOfFlightsO[1].numberO, label: "Feb" },
+                                    { x: 3, y: @numOfFlightsO[2].numberO, label: "Mar" },
+                                    { x: 4, y: @numOfFlightsO[3].numberO, label: "Apr" },
+                                    { x: 5, y: @numOfFlightsO[4].numberO, label: "May" },
+                                    { x: 6, y: @numOfFlightsO[5].numberO, label: "Jun" },
+                                    { x: 7, y: @numOfFlightsO[6].numberO, label: "Jul" },
+                                    { x: 8, y: @numOfFlightsO[7].numberO, label: "Aug" },
+                                    { x: 9, y: @numOfFlightsO[8].numberO, label: "Sep" },
+                                    { x: 10, y: @numOfFlightsO[9].numberO, label: "Oct" },
+                                    { x: 11, y: @numOfFlightsO[10].numberO, label: "Nov" },
+                                    { x: 12, y: @numOfFlightsO[11].numberO, label: "Dec" },
+                                ]
+                            },
+                             {
+                                color: "#B0D0B0",
+                                type: "column",
+                                showInLegend: true,
+                                legendMarkerType: "none",
+                                legendText: "",
+                                dataPoints: [
+                                    { x: 1, y: @numOfFlightsO[12].numberO, label: "Jan" },
+                                    { x: 2, y: @numOfFlightsO[13].numberO, label: "Feb" },
+                                    { x: 3, y: @numOfFlightsO[14].numberO, label: "Mar" },
+                                    { x: 4, y: @numOfFlightsO[15].numberO, label: "Apr" },
+                                    { x: 5, y: @numOfFlightsO[16].numberO, label: "May" },
+                                    { x: 6, y: @numOfFlightsO[17].numberO, label: "Jun" },
+                                    { x: 7, y: @numOfFlightsO[18].numberO, label: "Jul" },
+                                    { x: 8, y: @numOfFlightsO[19].numberO, label: "Aug" },
+                                    { x: 9, y: @numOfFlightsO[20].numberO, label: "Sep" },
+                                    { x: 10, y: @numOfFlightsO[21].numberO, label: "Oct" },
+                                    { x: 11, y: @numOfFlightsO[22].numberO, label: "Nov" },
+                                    { x: 12, y: @numOfFlightsO[23].numberO, label: "Dec" },
+                                ]
+                            },
+                              {
+                                color: "#B0D0B0",
+                                type: "column",
+                                showInLegend: true,
+                                legendMarkerType: "none",
+                                legendText: "",
+                                dataPoints: [
+                                    { x: 1, y: @numOfFlightsO[24].numberO, label: "Jan" },
+                                    { x: 2, y: @numOfFlightsO[25].numberO, label: "Feb" },
+                                    { x: 3, y: @numOfFlightsO[26].numberO, label: "Mar" },
+                                    { x: 4, y: @numOfFlightsO[27].numberO, label: "Apr" },
+                                    { x: 5, y: @numOfFlightsO[28].numberO, label: "May" },
+                                    { x: 6, y: @numOfFlightsO[29].numberO, label: "Jun" },
+                                    { x: 7, y: @numOfFlightsO[30].numberO, label: "Jul" },
+                                    { x: 8, y: @numOfFlightsO[31].numberO, label: "Aug" },
+                                    { x: 9, y: @numOfFlightsO[32].numberO, label: "Sep" },
+                                    { x: 10, y: @numOfFlightsO[33].numberO, label: "Oct" },
+                                    { x: 11, y: @numOfFlightsO[34].numberO, label: "Nov" },
+                                    { x: 12, y: @numOfFlightsO[35].numberO, label: "Dec" },
+                                ]
+                            }
+                        ]
+                    });
+            chart3.render();
 		}
     </script>
     <section class="content">
@@ -192,8 +214,9 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-    <div id="chartContainer" style="height: 300px; width: 100%;">
-    </div>
+    <div id="chartContainer1" style="height: 300px; width: 100%;"> </div>
+    <div id="chartContainer2" style="height: 300px; width: 100%;"> </div>
+    <div id="chartContainer3" style="height: 300px; width: 100%;"> </div>
 </body>
 </html>
 }
