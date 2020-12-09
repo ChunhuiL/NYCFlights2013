@@ -19,24 +19,29 @@ namespace NYCFlights2013.Controllers
 		}
 
 		public IActionResult Flight()
+
 		{
 			return View();
 		}
-
+		
 		public IActionResult Plane()
 		{
 			return View();
 		}
 
 		public IActionResult Weather()
+
 		{
 			return View();
 		}
 
+
 		public IActionResult Airline()
+
 		{
 			return View();
 		}
+
 
 		public IActionResult Airport()
 		{

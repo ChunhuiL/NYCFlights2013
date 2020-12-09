@@ -18,5 +18,6 @@ namespace NYCFlights2013.Models
 		public string seats { get; set; }
 		public string speed { get; set; }
 		public string engine { get; set; }
+		public string number { get; set; }
 	}
 }

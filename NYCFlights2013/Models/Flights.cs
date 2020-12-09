@@ -25,6 +25,11 @@ namespace NYCFlights2013.Models
 		public string distance { get; set; }
 		public string hour { get; set; }
 		public string minute { get; set; }
-
+		public string number { get; set; }
+		public string meantime { get; set; }
+		public string numberO { get; set; }
+		public string top10 { get; set; }
+		public string delayD { get; set; }
+		public string delayA { get; set; }
 	}
 }
