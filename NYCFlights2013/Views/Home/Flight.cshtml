@@ -27,9 +27,43 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    @*    <script type="text/javascript">
-            window.onload = function () {
-                var chart = new CanvasJS.Chart("chartContainer",
+    <script type="text/javascript">
+		window.onload = function () {
+			var chart = new CanvasJS.Chart("chartContainer1",
+				{
+					title: {
+						text: "Top 10 dest"
+					},
+					axisY: {
+						title: ""
+					},
+					legend: {
+						verticalAlign: "bottom",
+						horizontalAlign: "center"
+					},
+					data: [
+						{
+							color: "#B0D0B0",
+							type: "column",
+							showInLegend: true,
+							legendMarkerType: "none",
+							legendText: "",
+							dataPoints: [
+								{ x: 1, y: @topdest[0].top10, label: "ORD" },
+								{ x: 2, y: @topdest[1].top10, label: "LAX" },
+								{ x: 3, y: @topdest[2].top10, label: "MIA" },
+								{ x: 4, y: @topdest[3].top10, label: "ATL" },
+								{ x: 5, y: @topdest[4].top10, label: "SFO" },
+								{ x: 6, y: @topdest[5].top10, label: "BOS" },
+								{ x: 7, y: @topdest[6].top10, label: "CLT" },
+								{ x: 8, y: @topdest[7].top10, label: "DFW" },
+								{ x: 9, y: @topdest[8].top10, label: "MCO" },
+								{ x: 10, y: @topdest[9].top10, label: "IAH" },
+							]
+						}
+					]
+				});
+            var chart1 = new CanvasJS.Chart("chartContainer2",
                     {
                         title: {
                             text: "Number of Flights per month"
@@ -66,86 +100,10 @@
                         ]
                     });
                 chart.render();
-            }
-        </script>*@
-    <script type="text/javascript">
-		window.onload = function () {
-			var chart = new CanvasJS.Chart("chartContainer",
-				{
-					title: {
-						text: "Top 10 dest"
-					},
-					axisY: {
-						title: ""
-					},
-					legend: {
-						verticalAlign: "bottom",
-						horizontalAlign: "center"
-					},
-					data: [
-						{
-							color: "#B0D0B0",
-							type: "column",
-							showInLegend: true,
-							legendMarkerType: "none",
-							legendText: "",
-							dataPoints: [
-								{ x: 1, y: @topdest[0].top10, label: "ORD" },
-								{ x: 2, y: @topdest[1].top10, label: "LAX" },
-								{ x: 3, y: @topdest[2].top10, label: "MIA" },
-								{ x: 4, y: @topdest[3].top10, label: "ATL" },
-								{ x: 5, y: @topdest[4].top10, label: "SFO" },
-								{ x: 6, y: @topdest[5].top10, label: "BOS" },
-								{ x: 7, y: @topdest[6].top10, label: "CLT" },
-								{ x: 8, y: @topdest[7].top10, label: "DFW" },
-								{ x: 9, y: @topdest[8].top10, label: "MCO" },
-								{ x: 10, y: @topdest[9].top10, label: "IAH" },
-							]
-						}
-					]
-				});
-            chart.render();
-            var chart1 = new CanvasJS.Chart("chartContainer",
-                    {
-                        title: {
-                            text: "Number of Flights per month"
-                        },
-                        axisY: {
-                            title: ""
-                        },
-                        legend: {
-                            verticalAlign: "bottom",
-                            horizontalAlign: "center"
-                        },
-                        data: [
-                            {
-                                color: "#B0D0B0",
-                                type: "column",
-                                showInLegend: true,
-                                legendMarkerType: "none",
-                                legendText: "",
-                                dataPoints: [
-                                    { x: 1, y: @numOfFlightsM[0].number, label: "Jan" },
-                                    { x: 2, y: @numOfFlightsM[1].number, label: "Feb" },
-                                    { x: 3, y: @numOfFlightsM[2].number, label: "Mar" },
-                                    { x: 4, y: @numOfFlightsM[3].number, label: "Apr" },
-                                    { x: 5, y: @numOfFlightsM[4].number, label: "May" },
-                                    { x: 6, y: @numOfFlightsM[5].number, label: "Jun" },
-                                    { x: 7, y: @numOfFlightsM[6].number, label: "Jul" },
-                                    { x: 8, y: @numOfFlightsM[7].number, label: "Aug" },
-                                    { x: 9, y: @numOfFlightsM[8].number, label: "Sep" },
-                                    { x: 10, y: @numOfFlightsM[9].number, label: "Oct" },
-                                    { x: 11, y: @numOfFlightsM[10].number, label: "Nov" },
-                                    { x: 12, y: @numOfFlightsM[11].number, label: "Dec" },
-                                ]
-                            }
-                        ]
-                    });
                 chart1.render();
 		}
     </script>
     <section class="content">
-
         <div>
             <table class="table-bordered table-responsive">
                 <tr class="table-active">
@@ -192,8 +150,7 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-    <div id="chartContainer" style="height: 300px; width: 100%;">
-    </div>
+	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+	<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
 </body>
 </html>
-}
