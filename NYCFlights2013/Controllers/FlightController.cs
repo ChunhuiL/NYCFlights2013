@@ -240,7 +240,6 @@ namespace NYCFlights2013.Controllers
                             delayA = rdr[2].ToString()
                         });
                     }
-
                     rdr.Close();
                     conn.Close();
                 }

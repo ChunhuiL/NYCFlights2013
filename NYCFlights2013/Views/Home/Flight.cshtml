@@ -27,7 +27,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-
     @*    <script type="text/javascript">
             window.onload = function () {
                 var chart = new CanvasJS.Chart("chartContainer",
@@ -106,7 +105,43 @@
 					]
 				});
             chart.render();
-                        
+            var chart1 = new CanvasJS.Chart("chartContainer",
+                    {
+                        title: {
+                            text: "Number of Flights per month"
+                        },
+                        axisY: {
+                            title: ""
+                        },
+                        legend: {
+                            verticalAlign: "bottom",
+                            horizontalAlign: "center"
+                        },
+                        data: [
+                            {
+                                color: "#B0D0B0",
+                                type: "column",
+                                showInLegend: true,
+                                legendMarkerType: "none",
+                                legendText: "",
+                                dataPoints: [
+                                    { x: 1, y: @numOfFlightsM[0].number, label: "Jan" },
+                                    { x: 2, y: @numOfFlightsM[1].number, label: "Feb" },
+                                    { x: 3, y: @numOfFlightsM[2].number, label: "Mar" },
+                                    { x: 4, y: @numOfFlightsM[3].number, label: "Apr" },
+                                    { x: 5, y: @numOfFlightsM[4].number, label: "May" },
+                                    { x: 6, y: @numOfFlightsM[5].number, label: "Jun" },
+                                    { x: 7, y: @numOfFlightsM[6].number, label: "Jul" },
+                                    { x: 8, y: @numOfFlightsM[7].number, label: "Aug" },
+                                    { x: 9, y: @numOfFlightsM[8].number, label: "Sep" },
+                                    { x: 10, y: @numOfFlightsM[9].number, label: "Oct" },
+                                    { x: 11, y: @numOfFlightsM[10].number, label: "Nov" },
+                                    { x: 12, y: @numOfFlightsM[11].number, label: "Dec" },
+                                ]
+                            }
+                        ]
+                    });
+                chart1.render();
 		}
     </script>
     <section class="content">
@@ -128,7 +163,6 @@
                             </td>
                         </tr>
                     }
-                    // TODO: Complete table.
                 }
             </table>
             <table class="table-bordered table-responsive">
@@ -151,7 +185,6 @@
                             </td>
                         </tr>
                     }
-                    // TODO: Complete table.
                 }
             </table>
         </div>
