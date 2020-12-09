@@ -16,16 +16,16 @@ namespace NYCFlights2013.Controllers
         private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3305;password=123456";
         public IActionResult Index()
         {
-            var planes = GetAllPlanes();
+            var planesNumM = GetPlanesNumM();
 
-            ViewData["planes"] = planes;
+            ViewData["planesNumM"] = planesNumM;
             return View("~/Views/Home/Plane.cshtml");
 
         }
 
-        public List<Planes> GetAllPlanes()
+        public List<Planes> GetPlanesNumM()
         {
-            var planes = new List<Planes>();
+            var planesNumM = new List<Planes>();
 
             try
             {
@@ -34,24 +34,18 @@ namespace NYCFlights2013.Controllers
 
                     conn.Open();
 
-                    string sql = "SELECT * FROM planes";
+                    string sql = "select model,count(model) AS number from planes group by model order BY model asc ";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
 
 
                     while (rdr.Read())
                     {
-                        planes.Add(new Planes
+                        planesNumM.Add(new Planes
                         {
-                            tailnum =       rdr[0].ToString(),
-                            year =          rdr[1].ToString(),
-                            type =          rdr[2].ToString(),
-                            manufacturer =  rdr[3].ToString(),
-                            model =         rdr[4].ToString(),
-                            engines =       rdr[5].ToString(),
-                            seats =         rdr[6].ToString(),
-                            speed =         rdr[7].ToString(),
-                            engine =        rdr[8].ToString()
+                            model =         rdr[0].ToString(),
+                            number =       rdr[1].ToString(),
+
                         });
                     }
                     rdr.Close();
@@ -63,7 +57,7 @@ namespace NYCFlights2013.Controllers
             {
                 Console.WriteLine(ex.ToString());
             }
-            return planes;
+            return planesNumM;
         }
     }
 }

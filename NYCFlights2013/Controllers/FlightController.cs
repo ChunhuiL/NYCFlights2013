@@ -13,13 +13,21 @@ namespace NYCFlights2013.Controllers
 {
     public class FlightController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
+        private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3305;password=123456";
         public IActionResult Index()
         {
             var flights = GetAllFlights();
             var numOfFlightsM = GetNumOfFlightsM();
+            var meantimeO = GetMeantimeO();
+            var numOfFlightsO = GetNumOfFlightsO();
+            var meandelay = GetMeandelay();
+            var topdest = GetTopdest();
+            ViewData["meandelay"] = meandelay;
+            ViewData["topdest"] = topdest;
+            ViewData["numOfFlightsO"] = numOfFlightsO;
             ViewData["flights"] = flights;
             ViewData["numOfFlightsM"] = numOfFlightsM;
+            ViewData["meantimeO"] = meantimeO;
             return View("~/Views/Home/Flight.cshtml");
 
         }
@@ -72,7 +80,6 @@ namespace NYCFlights2013.Controllers
             }
             return flights;
         }
-
         public List<Flights> GetNumOfFlightsM()
         {
             List<Flights> numOfFlightsM = new List<Flights>();
@@ -106,6 +113,144 @@ namespace NYCFlights2013.Controllers
             }
 
             return numOfFlightsM;
+        }
+        public List<Flights> GetMeantimeO()
+        {
+            List<Flights> meantimeO = new List<Flights>();
+            //            List<Flights> numOfFlightsM = new List<Flights>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT origin,  AVG(air_time) AS meantime FROM flights GROUP BY origin";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        meantimeO.Add(new Flights
+                        {
+                            origin = rdr[0].ToString(),
+                            meantime = rdr[1].ToString()
+                        });
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return meantimeO;
+        }
+        public List<Flights> GetNumOfFlightsO()
+        {
+            List<Flights> numOfFlightsO = new List<Flights>();
+            //            List<Flights> numOfFlightsM = new List<Flights>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT origin , MONTH , COUNT(origin) AS numberO FROM `flights` GROUP BY origin , month ORDER BY origin , month ASC";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        numOfFlightsO.Add(new Flights
+                        {
+                            origin = rdr[0].ToString(),
+                            month = rdr[1].ToString(),
+                            numberO = rdr[2].ToString()
+                        });
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return numOfFlightsO;
+        }
+        public List<Flights> GetTopdest()
+        {
+            List<Flights> topdest = new List<Flights>();
+            //            List<Flights> numOfFlightsM = new List<Flights>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT dest, COUNT(dest) AS top10 FROM `flights` GROUP BY dest ORDER BY COUNT(dest) DESC LIMIT 10";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        topdest.Add(new Flights
+                        {
+                            dest = rdr[0].ToString(),
+                            top10 = rdr[1].ToString()
+                        });
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return topdest;
+        }
+        public List<Flights> GetMeandelay()
+        {
+            List<Flights> meandelay = new List<Flights>();
+            //            List<Flights> numOfFlightsM = new List<Flights>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT origin,  AVG(dep_delay) AS delayD, AVG(arr_delay) AS delayA FROM flights GROUP BY origin";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        meandelay.Add(new Flights
+                        {
+                            origin = rdr[0].ToString(),
+                            delayD = rdr[1].ToString(),
+                            delayA = rdr[2].ToString()
+                        });
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return meandelay;
         }
     }
 }
