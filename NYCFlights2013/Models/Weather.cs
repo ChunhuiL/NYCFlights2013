@@ -12,6 +12,7 @@ namespace NYCFlights2013.Models
 		public string origin { get; set; }
 		public string year { get; set; }
 		public string month { get; set; }
+		public string month_letters { get; set; } // Might not use.
 		public string day { get; set; }
 		public string hour { get; set; }
 		public string temp { get; set; }

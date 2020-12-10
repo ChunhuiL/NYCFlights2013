@@ -82,18 +82,21 @@ namespace NYCFlights2013.Controllers
                 {
                     conn.Open();
 
-                    string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS temp, month, year FROM weather";
+                    string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS celsius, day, month, year FROM weather";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
 
                     while (rdr.Read())
                     {
+
                         temp_attribute_celcius.Add(new Weather
                         {
                             origin = rdr[0].ToString(),
                             temp = rdr[1].ToString(),
-                            month = rdr[2].ToString(),
-                            year = rdr[3].ToString()
+                            day = rdr[2].ToString(),
+                            month = rdr[3].ToString(),
+                            month_letters = MonthToString(rdr[3].ToString()),  // Might not use.
+                            year = rdr[4].ToString()
                         }) ;
                     }
 
@@ -108,5 +111,39 @@ namespace NYCFlights2013.Controllers
 
             return temp_attribute_celcius;
         }
+        public string MonthToString(string month)
+		{
+
+            string l_month = null;
+
+            if (month == "1")
+                l_month = "Jan";
+            if (month == "2")
+                l_month = "Feb";
+            if (month == "3")
+                l_month = "Mar";
+            if (month == "4")
+                l_month = "Apr";
+            if (month == "5")
+                l_month = "May";
+            if (month == "6")
+                l_month = "Jun";
+            if (month == "7")
+                l_month = "Jul";
+            if (month == "8")
+                l_month = "Aug";
+            if (month == "9")
+                l_month = "Sep";
+            if (month == "10")
+                l_month = "Oct";
+            if (month == "11")
+                l_month = "Nov";
+            if (month == "12")
+                l_month = "Dec";
+            if (month == null)
+                throw new Exception(this.GetType().FullName);
+
+                return l_month;
+		}
     }
 }
