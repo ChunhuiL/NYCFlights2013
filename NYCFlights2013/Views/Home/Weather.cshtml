@@ -1,9 +1,12 @@
 ﻿@{
+
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
-	int globalCounter = 10000; // How many rows to extract
 	var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
+	var temp_attribute_celciusJSON = ViewData["temp_attribute_celciusJSON"];
+	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
+	int globalCounter = 26004; // How many rows to extract
 	string[] ChartHeadersWeather = new string[] {
 	"Year",
 	"Month",
@@ -22,12 +25,12 @@
 	"Hour",
 	"Minute"};          //TODO: Use appropriate fields.
 
-
-	string dps_full = "";
-	for (int i = 6730; i <= globalCounter; i++)
+	// Extract all three origins
+	string dps_full_three_origins = "";
+	for (int i = 0; i <= globalCounter; i++)
 	{
 
-		string dps = "{x: new Date(2011, 9, 9), y: 22},"
+		string dps_three_origins = "{x: new Date(2011, 9, 9), y: 22},"
 			.Replace("2011", temp_attribute_celcius[i].year)
 			.Replace("9,", (Int32.Parse(temp_attribute_celcius[i].month) - 1).ToString() + ",")
 			.Replace("9", temp_attribute_celcius[i].day)
@@ -35,159 +38,127 @@
 
 		if (i == globalCounter)
 		{
-			dps = dps.Remove(dps.Length - 1);
-			dps = dps.Insert(dps.Length, "]");
+			dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
+			dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
 		}
 
-		dps_full += dps;
+		dps_full_three_origins += dps_three_origins;
 	}
-	string dps_entire = dps_full;
+	// Extract JFK origin
+	string dps_full_one_origin = "";
+	for (int i = 0; i <= 8710; i++)
+	{
 
-	Console.WriteLine(@temp_attribute_celcius[3366].month_letters); // 3366 returns May
+		string dps_one_origin = "{x: new Date(2011, 9, 9), y: 22},"
+			.Replace("2011", temp_attribute_celciusJFK[i].year)
+			.Replace("9,", (Int32.Parse(temp_attribute_celciusJFK[i].month) - 1).ToString() + ",")
+			.Replace("9", temp_attribute_celciusJFK[i].day)
+			.Replace("22", temp_attribute_celciusJFK[i].temp);
+
+		if (i == 8710)
+		{
+			dps_one_origin = dps_one_origin.Remove(dps_one_origin.Length - 1);
+			dps_one_origin = dps_one_origin.Insert(dps_one_origin.Length, "]");
+		}
+
+		dps_full_one_origin += dps_one_origin;
+	}
+
 	Console.WriteLine(@temp_attribute_celcius[3366].year); // 3366 returns 2013
-
-}
-
-<script>
-	window.onload = function () {
-
-		Highcharts.chart('container', {
-			chart: {
-				type: 'scatter',
-				zoomType: 'xy'
-			},
-			title: {
-				text: 'Temperatures from origins EWR, JFK, LGA'
-			},
-			subtitle: {
-				text: 'Source: Heinz  2003'
-			},
-			xAxis: {
+	//TODO: Serialize and deserialize objects
+	}
+	
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/javascript">
+		window.onload = function () {
+			var data_xAxisThreeOrigins = [
+				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
+				{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
+				{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
+				{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
+				{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
+				{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
+				{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
+				{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
+				{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
+				{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
+				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
+				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
+				@dps_full_three_origins;
+			var data_xAxisJFKOrigin = [
+				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
+				{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
+				{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
+				{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
+				{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
+				{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
+				{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
+				{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
+				{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
+				{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
+				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
+				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
+				@dps_full_one_origin;
+			var chart1 = new CanvasJS.Chart("chartContainer1", {
+				animationEnabled: true,
+				zoomEnabled: true,
 				title: {
-					enabled: true,
-					text: 'Month of Year'
+					text: "Temperatures from origins EWR, JFK, LGA"
 				},
-				startOnTick: true,
-				endOnTick: true,
-				showLastLabel: true
-			},
-			yAxis: {
-				title: {
-					text: 'Temperature in Celcius'
-				}
-			},
-			legend: {
-				layout: 'vertical',
-				align: 'left',
-				verticalAlign: 'top',
-				x: 100,
-				y: 70,
-				floating: true,
-				backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
-				borderWidth: 1
-			},
-			plotOptions: {
-				scatter: {
-					marker: {
-						radius: 5,
-						states: {
-							hover: {
-								enabled: true,
-								lineColor: 'rgb(100,100,100)'
-							}
-						}
-					},
-					states: {
-						hover: {
-							marker: {
-								enabled: false
-							}
-						}
-					},
-					tooltip: {
-						headerFormat: '<b>{series.name}</b><br>',
-						pointFormat: '{point.x} cm, {point.y} kg'
-					}
-				}
-			},
-			series: [{
-				name: 'Female',
-				color: 'rgba(223, 83, 83, .5)',
-				data: [["Jan 2013", 51.6]]
-
-			}, {
-					name: 'Male',
-				color: 'rgba(119, 152, 191, .5)',
-					data: [["Feb 2013", 22.2], ["Mar 2013", 71.8]]
-				}],
-			plugins: [{
-					beforeInit: function (chart) {
-						var time = chart.options.scales.xAxes[0].time, // 'time' object reference
-							timeDiff = moment(time.max).diff(moment(time.min), 'd'); // difference (in days) between min and max date
-						// populate 'labels' array
-						// (create a date string for each date between min and max, inclusive)
-						for (i = 0; i <= timeDiff; i++) {
-							var _label = moment(time.min).add(i, 'd').format('YYYY-MM-DD HH:mm:ss');
-							chart.data.labels.push(_label);
-						}
-					}
+				axisX: {
+					gridThickness: 1,
+					title: "Month of Year",
+					labelFormatter: function (e) {
+			return CanvasJS.formatDate(e.value, "MMM YYYY");
+		}
+	},
+				axisY: {
+		gridThickness: 1,
+					title: "Temperature in Celcius",
+				},
+				data: [{
+		type: "scatter",
+					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
+					xValueType: "dateTime",
+					dataPoints: data_xAxisThreeOrigins
+						// Might need to convert String date to Integer date for the above to work when being fed data.
 				}]
-		});
+			});
+			chart1.render();
+			var chart2 = new CanvasJS.Chart("chartContainer2", {
+				animationEnabled: true,
+				zoomEnabled: true,
+				title: {
+					text: "Temperatures from origin JFK"
+				},
+				axisX: {
+					gridThickness: 1,
+					title: "Month of Year",
+					labelFormatter: function (e) {
+						return CanvasJS.formatDate(e.value, "MMM YYYY");
+					}
+				},
+				axisY: {
+					gridThickness: 1,
+					title: "Temperature in Celcius",
+				},
+				data: [{
+					type: "scatter",
+					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
+					xValueType: "dateTime",
+					dataPoints: data_xAxisJFKOrigin
+					// Might need to convert String date to Integer date for the above to work when being fed data.
+				}]
+			});
+			chart2.render();
 	}
-</script>
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-<figure class="highcharts-figure">
-	<div id="container"></div>
-	<p class="highcharts-description">
-		Scatter charts are often used to visualize the relationships
-		between data in two dimensions. This chart is visualizing
-		height and weight by gender, showing a clear trend where men
-		are on average taller and heavier than women.
-	</p>
-</figure>
-
-<style>
-	.highcharts-figure, .highcharts-data-table table {
-		min-width: 360px;
-		max-width: 800px;
-		margin: 1em auto;
-	}
-
-	.highcharts-data-table table {
-		font-family: Verdana, sans-serif;
-		border-collapse: collapse;
-		border: 1px solid #EBEBEB;
-		margin: 10px auto;
-		text-align: center;
-		width: 100%;
-		max-width: 500px;
-	}
-
-	.highcharts-data-table caption {
-		padding: 1em 0;
-		font-size: 1.2em;
-		color: #555;
-	}
-
-	.highcharts-data-table th {
-		font-weight: 600;
-		padding: 0.5em;
-	}
-
-	.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-		padding: 0.5em;
-	}
-
-	.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-		background: #f8f8f8;
-	}
-
-	.highcharts-data-table tr:hover {
-		background: #f1f7ff;
-	}
-</style>
+	</script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+	<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+</body>
+</html>
