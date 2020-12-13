@@ -22,14 +22,13 @@ namespace NYCFlights2013.Controllers
             var temp_attribute_celcius = GetWeatherTemp();
             var temp_attribute_celciusJSON = GetWeatherTemp();
             var temp_attribute_celciusJFK = GetWeatherTempAtJFK();
-
+            var temp_attribute_dailyMeanTempJFK = GetDailyMeanTempJFK();
 
             ViewData["weather"] = weather;
             ViewData["temp_attribute_celcius"] = temp_attribute_celcius;
             ViewData["temp_attribute_celciusJSON"] = JsonSerializer.Serialize(temp_attribute_celciusJSON);
-
-
             ViewData["temp_attribute_celciusJFK"] = temp_attribute_celciusJFK;
+            ViewData["temp_attribute_dailyMeanTempJFK"] = temp_attribute_dailyMeanTempJFK;
             return View("~/Views/Home/Weather.cshtml");
 
         }
@@ -156,6 +155,44 @@ namespace NYCFlights2013.Controllers
             }
 
             return temp_attribute_celciusJFK;
+        }
+
+        public List<Weather> GetDailyMeanTempJFK()
+        {
+            List<Weather> temp_attribute_dailyMeanTempJFK = new List<Weather>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+
+                    string sql = "?";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+
+                        temp_attribute_dailyMeanTempJFK.Add(new Weather
+                        {
+                            origin = rdr[0].ToString(),
+                            temp = rdr[1].ToString(),
+                            day = rdr[2].ToString(),
+                            month = rdr[3].ToString(),
+                            year = rdr[4].ToString()
+                        });
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return temp_attribute_dailyMeanTempJFK;
         }
 
     }
