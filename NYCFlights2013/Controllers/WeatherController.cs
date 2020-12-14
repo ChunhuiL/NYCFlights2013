@@ -20,15 +20,20 @@ namespace NYCFlights2013.Controllers
         {
             var weather = GetAllWeather();
             var temp_attribute_celcius = GetWeatherTemp();
-            var temp_attribute_celciusJSON = GetWeatherTemp();
+            var temp_attribute_celcius_date = GetWeatherTempDate();
             var temp_attribute_celciusJFK = GetWeatherTempAtJFK();
-            var temp_attribute_dailyMeanTempJFK = GetDailyMeanTempJFK();
+
+            var temp_attribute_daily_mean = GetDailyMeanTemp();
+            var temp_attribute_daily_mean_JFK = GetDailyMeanTempJFK();
 
             ViewData["weather"] = weather;
             ViewData["temp_attribute_celcius"] = temp_attribute_celcius;
-            ViewData["temp_attribute_celciusJSON"] = JsonSerializer.Serialize(temp_attribute_celciusJSON);
+            ViewData["temp_attribute_celcius_date"] = temp_attribute_celcius_date;
             ViewData["temp_attribute_celciusJFK"] = temp_attribute_celciusJFK;
-            ViewData["temp_attribute_dailyMeanTempJFK"] = temp_attribute_dailyMeanTempJFK;
+
+            ViewData["temp_attribute_daily_mean"] = temp_attribute_daily_mean;
+            ViewData["temp_attribute_daily_mean_JFK"] = temp_attribute_daily_mean_JFK;
+
             return View("~/Views/Home/Weather.cshtml");
 
         }
@@ -90,7 +95,8 @@ namespace NYCFlights2013.Controllers
                 {
                     conn.Open();
 
-                    string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS celsius, day, month, year FROM weather";
+                    //string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS celsius, day, month, year FROM weather";
+                    string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS temp FROM weather WHERE temp IS NOT NULL";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -100,11 +106,8 @@ namespace NYCFlights2013.Controllers
                         temp_attribute_celcius.Add(new Weather
                         {
                             origin = rdr[0].ToString(),
-                            temp = rdr[1].ToString(),
-                            day = rdr[2].ToString(),
-                            month = rdr[3].ToString(),
-                            year = rdr[4].ToString()
-                        }) ;
+                            temp = rdr[1].ToString()
+                        });
                     }
 
                     rdr.Close();
@@ -117,6 +120,42 @@ namespace NYCFlights2013.Controllers
             }
 
             return temp_attribute_celcius;
+        }
+
+        public List<Weather> GetWeatherTempDate()
+        {
+            List<Weather> temp_attribute_celcius_date = new List<Weather>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT day, month, year FROM weather";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+
+                        temp_attribute_celcius_date.Add(new Weather
+                        {
+                            day = rdr[0].ToString(),
+                            month = rdr[1].ToString(),
+                            year = rdr[2].ToString()
+                        });
+                    }
+
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return temp_attribute_celcius_date;
         }
 
         public List<Weather> GetWeatherTempAtJFK()
@@ -156,30 +195,29 @@ namespace NYCFlights2013.Controllers
 
             return temp_attribute_celciusJFK;
         }
-
-        public List<Weather> GetDailyMeanTempJFK()
+        public List<Weather> GetDailyMeanTemp()
         {
-            List<Weather> temp_attribute_dailyMeanTempJFK = new List<Weather>();
+            List<Weather> temp_attribute_daily_mean = new List<Weather>();
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
-                    string sql = "?";
+                    string sql = "SELECT origin, year, month, day, ROUND((SUM((temp - 32) * 5.0 / 9) /24), 2) AS mean FROM weather GROUP BY origin,year,month,day";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
 
                     while (rdr.Read())
                     {
 
-                        temp_attribute_dailyMeanTempJFK.Add(new Weather
+                        temp_attribute_daily_mean.Add(new Weather
                         {
                             origin = rdr[0].ToString(),
-                            temp = rdr[1].ToString(),
-                            day = rdr[2].ToString(),
-                            month = rdr[3].ToString(),
-                            year = rdr[4].ToString()
+                            year = rdr[1].ToString(),
+                            month = rdr[2].ToString(),
+                            day = rdr[3].ToString(),
+                            mean = rdr[4].ToString()
                         });
                     }
 
@@ -192,8 +230,45 @@ namespace NYCFlights2013.Controllers
                 Console.WriteLine(ex.ToString());
             }
 
-            return temp_attribute_dailyMeanTempJFK;
+            return temp_attribute_daily_mean;
         }
 
+        public List<Weather> GetDailyMeanTempJFK()
+          {
+              List<Weather> temp_attribute_daily_mean_JFK = new List<Weather>();
+              try
+              {
+                  using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
+                  {
+                      conn.Open();
+
+                      string sql = "SELECT origin, year, month, day, ROUND((SUM((temp - 32) * 5.0 / 9) /24), 2) AS mean FROM weather WHERE origin LIKE '%JFK%' GROUP BY origin,year,month,day";
+                      MySqlCommand cmd = new MySqlCommand(sql, conn);
+                      MySqlDataReader rdr = cmd.ExecuteReader();
+
+                      while (rdr.Read())
+                      {
+
+                          temp_attribute_daily_mean_JFK.Add(new Weather
+                          {
+                              origin = rdr[0].ToString(),
+                              year = rdr[1].ToString(),
+                              month = rdr[2].ToString(),
+                              day = rdr[3].ToString(),
+                              mean = rdr[4].ToString()
+                          });
+                      }
+
+                      rdr.Close();
+                      conn.Close();
+                  }
+              }
+              catch (Exception ex)
+              {
+                  Console.WriteLine(ex.ToString());
+              }
+
+              return temp_attribute_daily_mean_JFK;
+          }
     }
 }

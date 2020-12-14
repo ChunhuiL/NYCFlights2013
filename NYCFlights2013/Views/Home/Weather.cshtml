@@ -4,39 +4,27 @@
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
 	var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
-	var temp_attribute_celciusJSON = ViewData["temp_attribute_celciusJSON"];
+	var temp_attribute_celcius_date = (List<Weather>)ViewData["temp_attribute_celcius_date"];
 	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
-	int globalCounter = 26004; // How many rows to extract
-	string[] ChartHeadersWeather = new string[] {
-	"Year",
-	"Month",
-	"Day",
-	"Departure Time",
-	"Departure Delay",
-	"Arrival Time",
-	"Arrival Delay",
-	"Carrier",
-	"Tail Number",
-	"Flight",
-	"Origin",
-	"Destination",
-	"Air Time",
-	"Distance",
-	"Hour",
-	"Minute"};          //TODO: Use appropriate fields.
+
+	var temp_attribute_daily_mean = (List<Weather>)ViewData["temp_attribute_daily_mean"];
+	var temp_attribute_daily_mean_JFK = (List<Weather>)ViewData["temp_attribute_daily_mean_JFK"];
+
+	int globalCounterAllOrigins = 6000; // How many rows to extract
+	int globalCounterJFKOrigin = 6000; // How many rows to extract
 
 	// Extract all three origins
 	string dps_full_three_origins = "";
-	for (int i = 0; i <= globalCounter; i++)
+	for (int i = 0; i <= globalCounterAllOrigins; i++)
 	{
 
-		string dps_three_origins = "{x: new Date(2011, 9, 9), y: 22},"
-			.Replace("2011", temp_attribute_celcius[i].year)
-			.Replace("9,", (Int32.Parse(temp_attribute_celcius[i].month) - 1).ToString() + ",")
-			.Replace("9", temp_attribute_celcius[i].day)
+		string dps_three_origins = "{x: new Date(2011, 12, 9), y: 22},"
+			.Replace("2011", temp_attribute_celcius_date[i].year)
+			.Replace("12", temp_attribute_celcius_date[i].month)
+			.Replace("9", temp_attribute_celcius_date[i].day)
 			.Replace("22", temp_attribute_celcius[i].temp);
 
-		if (i == globalCounter)
+		if (i == globalCounterAllOrigins)
 		{
 			dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
 			dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
@@ -44,30 +32,26 @@
 
 		dps_full_three_origins += dps_three_origins;
 	}
+
 	// Extract JFK origin
 	string dps_full_one_origin = "";
-	for (int i = 0; i <= 8710; i++)
+	for (int i = 0; i <= globalCounterJFKOrigin; i++)
 	{
-
-		string dps_one_origin = "{x: new Date(2011, 9, 9), y: 22},"
+		string dps_one_origin = "{x: new Date(2011, 12, 9), y: 22},"
 			.Replace("2011", temp_attribute_celciusJFK[i].year)
-			.Replace("9,", (Int32.Parse(temp_attribute_celciusJFK[i].month) - 1).ToString() + ",")
+			.Replace("12", temp_attribute_celciusJFK[i].month)
 			.Replace("9", temp_attribute_celciusJFK[i].day)
 			.Replace("22", temp_attribute_celciusJFK[i].temp);
-
-		if (i == 8710)
+		if (i == globalCounterJFKOrigin)
 		{
 			dps_one_origin = dps_one_origin.Remove(dps_one_origin.Length - 1);
 			dps_one_origin = dps_one_origin.Insert(dps_one_origin.Length, "]");
 		}
-
 		dps_full_one_origin += dps_one_origin;
 	}
 
-	Console.WriteLine(@temp_attribute_celcius[3366].year); // 3366 returns 2013
-														   //TODO: Serialize and deserialize objects
 	}
-	
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -101,7 +85,7 @@
 				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
 				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
 				@dps_full_one_origin;
-			var chart1 = new CanvasJS.Chart("chartContainer1", {
+				var chart1 = new CanvasJS.Chart("chartContainer1", {
 				animationEnabled: true,
 				zoomEnabled: true,
 				title: {
@@ -163,16 +147,32 @@
 	<table class="table-bordered table-responsive">
 		<tr>
 			<th>Origin</th>
-			<th>Temperature</th>
+			<th>Mean Temp</th>
 			<th>Day</th>
 			<th>Month</th>
+			<th>Year</th>
 		</tr>
-		<tr>
-			<td>"JFK"</td>
-			<td>22.7</td>
-			<td>7</td>
-			<td>10</td>
-		</tr>
+		@{ foreach (var dailyMean in temp_attribute_daily_mean)
+			{
+				<tr>
+					<td class="table-info">
+						@dailyMean.origin
+					</td>
+					<td>
+						@dailyMean.mean
+					</td>
+					<td>
+						@dailyMean.day
+					</td>
+					<td>
+						@dailyMean.month
+					</td>
+					<td>
+						@dailyMean.year
+					</td>
+				</tr>
+			}
+		}
 	</table>
 </body>
 </html>
