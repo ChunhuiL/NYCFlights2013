@@ -14,7 +14,7 @@ namespace NYCFlights2013.Controllers
     //Test
     public class FlightController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
+        private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3306;password=12345";
         public IActionResult Index()
         {
             var flights = GetAllFlights();
