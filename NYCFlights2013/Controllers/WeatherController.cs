@@ -15,6 +15,7 @@ namespace NYCFlights2013.Controllers
 {
     public class WeatherController : Controller
     {
+
     ConnectionDB connDB = new ConnectionDB();
         public IActionResult Index()
         {
