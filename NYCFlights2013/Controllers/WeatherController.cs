@@ -15,7 +15,7 @@ namespace NYCFlights2013.Controllers
 {
     public class WeatherController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
+    ConnectionDB connDB = new ConnectionDB();
         public IActionResult Index()
         {
             var weather = GetAllWeather();
@@ -39,7 +39,7 @@ namespace NYCFlights2013.Controllers
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
 
                     conn.Open();
@@ -86,7 +86,7 @@ namespace NYCFlights2013.Controllers
             List<Weather> temp_attribute_celcius = new List<Weather>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
@@ -124,7 +124,7 @@ namespace NYCFlights2013.Controllers
             List<Weather> temp_attribute_celciusJFK = new List<Weather>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
@@ -162,7 +162,7 @@ namespace NYCFlights2013.Controllers
             List<Weather> temp_attribute_dailyMeanTempJFK = new List<Weather>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 

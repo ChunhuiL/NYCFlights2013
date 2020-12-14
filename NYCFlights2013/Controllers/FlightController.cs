@@ -11,12 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NYCFlights2013.Controllers
 {
-    //Test
     public class FlightController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
+    ConnectionDB connDB = new ConnectionDB();
         public IActionResult Index()
         {
+
             var flights = GetAllFlights();
             var numOfFlightsM = GetNumOfFlightsM();
             var meantimeO = GetMeantimeO();
@@ -38,7 +38,7 @@ namespace NYCFlights2013.Controllers
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
 
                     conn.Open();
@@ -87,7 +87,7 @@ namespace NYCFlights2013.Controllers
             //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
@@ -121,7 +121,7 @@ namespace NYCFlights2013.Controllers
             //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
@@ -155,7 +155,7 @@ namespace NYCFlights2013.Controllers
             //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
@@ -190,7 +190,7 @@ namespace NYCFlights2013.Controllers
             //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
@@ -224,7 +224,7 @@ namespace NYCFlights2013.Controllers
             //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
                     conn.Open();
 
