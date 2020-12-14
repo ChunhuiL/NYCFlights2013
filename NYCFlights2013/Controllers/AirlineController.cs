@@ -13,9 +13,13 @@ namespace NYCFlights2013.Controllers
 {
     public class AirlineController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3306;password=12345";
+
+		ConnectionDB connDB = new ConnectionDB();
+
+
         public IActionResult Index()
         {
+             
             var airlines = GetAllAirlines();
 
             ViewData["airlines"] = airlines;
@@ -29,7 +33,7 @@ namespace NYCFlights2013.Controllers
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
 
                     conn.Open();
@@ -41,8 +45,11 @@ namespace NYCFlights2013.Controllers
 
                     while (rdr.Read())
                     {
-                        airlines.Add(new Airlines { carrier = rdr[0].ToString(), 
-                                                                    name = rdr[1].ToString() });
+                        airlines.Add(new Airlines
+                        {
+                            carrier = rdr[0].ToString(),
+                            name = rdr[1].ToString()
+                        });
 
                     }
                     rdr.Close();

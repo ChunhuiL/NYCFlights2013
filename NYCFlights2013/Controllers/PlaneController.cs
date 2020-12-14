@@ -13,7 +13,8 @@ namespace NYCFlights2013.Controllers
 {
     public class PlaneController : Controller
     {
-        private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3306;password=12345";
+
+    ConnectionDB connDB = new ConnectionDB();
         public IActionResult Index()
         {
             var planesNumM = GetPlanesNumM();
@@ -29,7 +30,7 @@ namespace NYCFlights2013.Controllers
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(CONNECTION_STRING))
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
                 {
 
                     conn.Open();
