@@ -1,9 +1,12 @@
 ﻿@{
+
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
-	int globalCounter = 0;
 	var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
+	var temp_attribute_celciusJSON = ViewData["temp_attribute_celciusJSON"];
+	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
+	int globalCounter = 26004; // How many rows to extract
 	string[] ChartHeadersWeather = new string[] {
 	"Year",
 	"Month",
@@ -22,19 +25,83 @@
 	"Hour",
 	"Minute"};          //TODO: Use appropriate fields.
 
+	// Extract all three origins
+	string dps_full_three_origins = "";
+	for (int i = 0; i <= globalCounter; i++)
+	{
 
-	Console.WriteLine(@temp_attribute_celcius[3366].month_letters); // 3366 returns May
-}
+		string dps_three_origins = "{x: new Date(2011, 9, 9), y: 22},"
+			.Replace("2011", temp_attribute_celcius[i].year)
+			.Replace("9,", (Int32.Parse(temp_attribute_celcius[i].month) - 1).ToString() + ",")
+			.Replace("9", temp_attribute_celcius[i].day)
+			.Replace("22", temp_attribute_celcius[i].temp);
 
+		if (i == globalCounter)
+		{
+			dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
+			dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
+		}
 
+		dps_full_three_origins += dps_three_origins;
+	}
+	// Extract JFK origin
+	string dps_full_one_origin = "";
+	for (int i = 0; i <= 8710; i++)
+	{
+
+		string dps_one_origin = "{x: new Date(2011, 9, 9), y: 22},"
+			.Replace("2011", temp_attribute_celciusJFK[i].year)
+			.Replace("9,", (Int32.Parse(temp_attribute_celciusJFK[i].month) - 1).ToString() + ",")
+			.Replace("9", temp_attribute_celciusJFK[i].day)
+			.Replace("22", temp_attribute_celciusJFK[i].temp);
+
+		if (i == 8710)
+		{
+			dps_one_origin = dps_one_origin.Remove(dps_one_origin.Length - 1);
+			dps_one_origin = dps_one_origin.Insert(dps_one_origin.Length, "]");
+		}
+
+		dps_full_one_origin += dps_one_origin;
+	}
+
+	Console.WriteLine(@temp_attribute_celcius[3366].year); // 3366 returns 2013
+														   //TODO: Serialize and deserialize objects
+	}
+	
 <!DOCTYPE HTML>
 <html>
 <head>
 	<script type="text/javascript">
-
 		window.onload = function () {
-
-			var chart = new CanvasJS.Chart("chartContainer", {
+			var data_xAxisThreeOrigins = [
+				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
+				{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
+				{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
+				{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
+				{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
+				{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
+				{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
+				{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
+				{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
+				{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
+				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
+				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
+				@dps_full_three_origins;
+			var data_xAxisJFKOrigin = [
+				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
+				{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
+				{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
+				{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
+				{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
+				{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
+				{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
+				{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
+				{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
+				{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
+				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
+				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
+				@dps_full_one_origin;
+			var chart1 = new CanvasJS.Chart("chartContainer1", {
 				animationEnabled: true,
 				zoomEnabled: true,
 				title: {
@@ -42,7 +109,36 @@
 				},
 				axisX: {
 					gridThickness: 1,
-					title: "Month of Year"
+					title: "Month of Year",
+					labelFormatter: function (e) {
+			return CanvasJS.formatDate(e.value, "MMM YYYY");
+		}
+	},
+				axisY: {
+		gridThickness: 1,
+					title: "Temperature in Celcius",
+				},
+				data: [{
+		type: "scatter",
+					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
+					xValueType: "dateTime",
+					dataPoints: data_xAxisThreeOrigins
+						// Might need to convert String date to Integer date for the above to work when being fed data.
+				}]
+			});
+			chart1.render();
+			var chart2 = new CanvasJS.Chart("chartContainer2", {
+				animationEnabled: true,
+				zoomEnabled: true,
+				title: {
+					text: "Temperatures from origin JFK"
+				},
+				axisX: {
+					gridThickness: 1,
+					title: "Month of Year",
+					labelFormatter: function (e) {
+						return CanvasJS.formatDate(e.value, "MMM YYYY");
+					}
 				},
 				axisY: {
 					gridThickness: 1,
@@ -50,104 +146,33 @@
 				},
 				data: [{
 					type: "scatter",
-					// color: "Orange",
-					toolTipContent: "<b>Month: </b>{label} <br/><b>Temperature: </b>{y}°C",
-					dataPoints: [
-						// Example data extracted from database. Need to update later.
-						// X Axis depends on the extracted date.
-
-
-						// Used for creating X-Axis Months.
-						//DUMMYDATA////////////////////////////////////////////
-						{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
-						{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
-						{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
-						{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
-						{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
-						{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
-						{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
-						{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
-						{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
-						{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
-						{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
-						{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
-						/////////////////////////////////////////////DUMMYDATA//
-
-
-
-						{ x: new Date(2013, 1, 1), y: @temp_attribute_celcius[0].temp },
-						{ x: new Date(2013, 1, 2), y: @temp_attribute_celcius[1].temp },
-						{ x: new Date(2013, 1, 3), y: @temp_attribute_celcius[2].temp },
-						{ x: new Date(2013, 1, 4), y: @temp_attribute_celcius[3].temp },
-						{ x: new Date(2013, 1, 5), y: @temp_attribute_celcius[4].temp },
-						{ x: new Date(2013, 1, 6), y: @temp_attribute_celcius[5].temp },
-						{ x: new Date(2013, 1, 7), y: @temp_attribute_celcius[6].temp },
-						{ x: new Date(2013, 1, 8), y: @temp_attribute_celcius[7].temp },
-						{ x: new Date(2013, 1, 9), y: @temp_attribute_celcius[8].temp },
-						{ x: new Date(2013, 1, 10), y: @temp_attribute_celcius[9].temp },
-						{ x: new Date(2013, 1, 11), y: @temp_attribute_celcius[3366].temp },
-						{ x: new Date(2013, 2, 4), y: @temp_attribute_celcius[4228].temp },
-						{ x: new Date(2013, 2, 7), y: @temp_attribute_celcius[4229].temp },
-						{ x: new Date(2013, 2, 16), y: @temp_attribute_celcius[4878].temp },
-						{ x: new Date(2013, 2, 18), y: @temp_attribute_celcius[4888].temp },
-						{ x: new Date(2013, 2, 23), y: @temp_attribute_celcius[4998].temp },
-						{ x: new Date(2013, 2, 31), y: @temp_attribute_celcius[4998].temp },
-						{ x: new Date(2013, 3, 4), y: @temp_attribute_celcius[5096].temp },
-						{ x: new Date(2013, 3, 7), y: @temp_attribute_celcius[5192].temp },
-						{ x: new Date(2013, 3, 16), y: @temp_attribute_celcius[5256].temp },
-						{ x: new Date(2013, 3, 18), y: @temp_attribute_celcius[5298].temp },
-						{ x: new Date(2013, 3, 23), y: @temp_attribute_celcius[5304].temp },
-						{ x: new Date(2013, 3, 31), y: @temp_attribute_celcius[5426].temp },
-						{ x: new Date(2013, 4, 7), y: @temp_attribute_celcius[5665].temp },
-						{ x: new Date(2013, 3, 12), y: @temp_attribute_celcius[5555].temp },
-						{ x: new Date(2013, 1, 13), y: @temp_attribute_celcius[6755].temp },
-						{ x: new Date(2013, 1, 18), y: @temp_attribute_celcius[12444].temp },
-						{ x: new Date(2013, 1, 15), y: @temp_attribute_celcius[16888].temp },
-						{ x: new Date(2013, 1, 16), y: @temp_attribute_celcius[18888].temp },
-						{ x: new Date(2013, 1, 17), y: @temp_attribute_celcius[19888].temp },
-						{ x: new Date(2013, 1, 18), y: @temp_attribute_celcius[19999].temp },
-						{ x: new Date(2013, 1, 19), y: @temp_attribute_celcius[20000].temp }
-						@*{ x: new Date(@temp_attribute_celcius[0].year, @temp_attribute_celcius[0].month, @temp_attribute_celcius[0].day), y: @temp_attribute_celcius[0].temp, label: "@temp_attribute_celcius[0].month_letters @temp_attribute_celcius[0].year" },
-						{ x: new Date(@temp_attribute_celcius[1].year, @temp_attribute_celcius[1].month, @temp_attribute_celcius[1].day), y: @temp_attribute_celcius[1].temp, label: "@temp_attribute_celcius[1].month_letters @temp_attribute_celcius[1].year" },
-						{ x: new Date(@temp_attribute_celcius[2].year, @temp_attribute_celcius[2].month, @temp_attribute_celcius[2].day), y: @temp_attribute_celcius[2].temp, label: "@temp_attribute_celcius[2].month_letters @temp_attribute_celcius[2].year" },
-						{ x: new Date(@temp_attribute_celcius[3366].year, @temp_attribute_celcius[3366].month, @temp_attribute_celcius[3366].day), y: @temp_attribute_celcius[3366].temp, label: "@temp_attribute_celcius[3366].month_letters @temp_attribute_celcius[3366].year" },
-						{ x: new Date(@temp_attribute_celcius[5555].year, @temp_attribute_celcius[5555].month, @temp_attribute_celcius[5555].day), y: @temp_attribute_celcius[5555].temp, label: "@temp_attribute_celcius[5555].month_letters @temp_attribute_celcius[5555].year" },
-						{ x: new Date(@temp_attribute_celcius[6755].year, @temp_attribute_celcius[6755].month, @temp_attribute_celcius[6755].day), y: @temp_attribute_celcius[6755].temp, label: "@temp_attribute_celcius[6755].month_letters @temp_attribute_celcius[6755].year" },
-						{ x: new Date(@temp_attribute_celcius[12444].year, @temp_attribute_celcius[12444].month, @temp_attribute_celcius[12444].day), y: @temp_attribute_celcius[12444].temp, label: "@temp_attribute_celcius[12444].month_letters @temp_attribute_celcius[12444].year" },
-						{ x: new Date(@temp_attribute_celcius[16888].year, @temp_attribute_celcius[16888].month, @temp_attribute_celcius[16888].day), y: @temp_attribute_celcius[16888].temp, label: "@temp_attribute_celcius[16888].month_letters @temp_attribute_celcius[16888].year" },
-						{ x: new Date(@temp_attribute_celcius[18888].year, @temp_attribute_celcius[18888].month, @temp_attribute_celcius[18888].day), y: @temp_attribute_celcius[18888].temp, label: "@temp_attribute_celcius[18888].month_letters @temp_attribute_celcius[18888].year" }*@
-				]
-						// Might need to convert String date to Integer date for the above to work when being fed data.
+					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
+					xValueType: "dateTime",
+					dataPoints: data_xAxisJFKOrigin
+					// Might need to convert String date to Integer date for the above to work when being fed data.
 				}]
 			});
-
-
-			@*foreach (var temp in temp_attribute_celcius)
-				{
-				<script>
-				chart.options.data[@globalCounter].dataPoints.push({
-				x: @globalCounter,
-				y: @temp_attribute_celcius[@globalCounter].temp,
-				label: @temp_attribute_celcius[@globalCounter].month_letters})
-				chart.render();
-				</script>
-				globalCounter += 1;
-				Console.WriteLine(@temp_attribute_celcius[@globalCounter].temp);
-
-				}
-				}*@
-
-
-
-
-	chart.render();
-
+			chart2.render();
 	}
-
 	</script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+	<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+	<table class="table-bordered table-responsive">
+		<tr>
+			<th>Origin</th>
+			<th>Temperature</th>
+			<th>Day</th>
+			<th>Month</th>
+		</tr>
+		<tr>
+			<td>"JFK"</td>
+			<td>22.7</td>
+			<td>7</td>
+			<td>10</td>
+		</tr>
+	</table>
 </body>
 </html>
