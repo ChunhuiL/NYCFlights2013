@@ -11,7 +11,7 @@ namespace NYCFlights2013.Models
 
 		public string GetConnectionString()
 		{
-
+			//test
 			return CONNECTION_STRING;
 		}
 
