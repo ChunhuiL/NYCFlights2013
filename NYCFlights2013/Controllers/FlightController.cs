@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NYCFlights2013.Controllers
 {
+    //Test
     public class FlightController : Controller
     {
         private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
