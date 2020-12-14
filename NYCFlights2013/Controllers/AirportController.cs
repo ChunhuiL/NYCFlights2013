@@ -13,9 +13,7 @@ namespace NYCFlights2013.Controllers
 {
     public class AirportController : Controller
     {
-
         private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3305;password=123456";
-
         public IActionResult Index()
         {
             var airports = GetAllAirports();

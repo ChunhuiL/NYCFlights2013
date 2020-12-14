@@ -13,9 +13,7 @@ namespace NYCFlights2013.Controllers
 {
     public class AirlineController : Controller
     {
-
         private string CONNECTION_STRING = "server=localhost;user=root;database=flight;port=3305;password=123456";
-
         public IActionResult Index()
         {
             var airlines = GetAllAirlines();
@@ -43,10 +41,8 @@ namespace NYCFlights2013.Controllers
 
                     while (rdr.Read())
                     {
-
                         airlines.Add(new Airlines { carrier = rdr[0].ToString(), 
                                                                     name = rdr[1].ToString() });
-
 
                     }
                     rdr.Close();
@@ -60,6 +56,7 @@ namespace NYCFlights2013.Controllers
             }
             return airlines;
         }
+
 
     }
 }

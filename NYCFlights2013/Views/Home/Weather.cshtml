@@ -1,7 +1,12 @@
 ﻿@{
+
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
+	var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
+	var temp_attribute_celciusJSON = ViewData["temp_attribute_celciusJSON"];
+	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
+	int globalCounter = 26004; // How many rows to extract
 	string[] ChartHeadersWeather = new string[] {
 	"Year",
 	"Month",
@@ -19,48 +24,155 @@
 	"Distance",
 	"Hour",
 	"Minute"};          //TODO: Use appropriate fields.
-}
-<div class="text-center">
-	<h1 class="display-4">Welcome</h1>
-	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-	<section class="content-header">
-		<h1>Echarts</h1>
-	</section>
-	<script src="~/lib/jquery/dist/jquery.js"></script>
-	<script src="~/lib/echarts/echarts.js"></script>
-	<section class="content">
-		<div class="row">
-			<div class="col-md-12">
-				<div id="myechart" style="width: 100%; height: 500px;">
 
-				</div>
-			</div>
-		</div>
-	</section>
+	// Extract all three origins
+	string dps_full_three_origins = "";
+	for (int i = 0; i <= globalCounter; i++)
+	{
 
+		string dps_three_origins = "{x: new Date(2011, 9, 9), y: 22},"
+			.Replace("2011", temp_attribute_celcius[i].year)
+			.Replace("9,", (Int32.Parse(temp_attribute_celcius[i].month) - 1).ToString() + ",")
+			.Replace("9", temp_attribute_celcius[i].day)
+			.Replace("22", temp_attribute_celcius[i].temp);
 
+		if (i == globalCounter)
+		{
+			dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
+			dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
+		}
+
+		dps_full_three_origins += dps_three_origins;
+	}
+	// Extract JFK origin
+	string dps_full_one_origin = "";
+	for (int i = 0; i <= 8710; i++)
+	{
+
+		string dps_one_origin = "{x: new Date(2011, 9, 9), y: 22},"
+			.Replace("2011", temp_attribute_celciusJFK[i].year)
+			.Replace("9,", (Int32.Parse(temp_attribute_celciusJFK[i].month) - 1).ToString() + ",")
+			.Replace("9", temp_attribute_celciusJFK[i].day)
+			.Replace("22", temp_attribute_celciusJFK[i].temp);
+
+		if (i == 8710)
+		{
+			dps_one_origin = dps_one_origin.Remove(dps_one_origin.Length - 1);
+			dps_one_origin = dps_one_origin.Insert(dps_one_origin.Length, "]");
+		}
+
+		dps_full_one_origin += dps_one_origin;
+	}
+
+	Console.WriteLine(@temp_attribute_celcius[3366].year); // 3366 returns 2013
+														   //TODO: Serialize and deserialize objects
+	}
+	
+<!DOCTYPE HTML>
+<html>
+<head>
 	<script type="text/javascript">
-		var myEChart = echarts.init(document.getElementById('myechart'));
-		//指定图标的配置和数据
-		var option = {
-			title: {
-				text: 'ECharts '
-			},
-			tooltip: {},
-			legend: {
-				data: ['resource']
-			},
-			xAxis: {
-				data: ['data']
-			},
-			yAxis: {},
-			series: [{
-				name: 'numbers',
-				type: 'bar',
-				data: [500, 200, 360, 100]
-			}]
-		};
-		//使用制定的配置项和数据显示图表
-		myEChart.setOption(option);</script>
-
-</div>
+		window.onload = function () {
+			var data_xAxisThreeOrigins = [
+				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
+				{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
+				{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
+				{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
+				{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
+				{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
+				{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
+				{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
+				{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
+				{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
+				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
+				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
+				@dps_full_three_origins;
+			var data_xAxisJFKOrigin = [
+				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
+				{ x: new Date(2013, 2, 1), y: null, label: "Feb 2013" },
+				{ x: new Date(2013, 3, 1), y: null, label: "Mar 2013" },
+				{ x: new Date(2013, 4, 1), y: null, label: "Apr 2013" },
+				{ x: new Date(2013, 5, 1), y: null, label: "May 2013" },
+				{ x: new Date(2013, 6, 1), y: null, label: "Jun 2013" },
+				{ x: new Date(2013, 7, 1), y: null, label: "Jul 2013" },
+				{ x: new Date(2013, 8, 1), y: null, label: "Aug 2013" },
+				{ x: new Date(2013, 9, 1), y: null, label: "Sep 2013" },
+				{ x: new Date(2013, 10, 1), y: null, label: "Oct 2013" },
+				{ x: new Date(2013, 11, 1), y: null, label: "Nov 2013" },
+				{ x: new Date(2013, 12, 1), y: null, label: "Dec 2013" },
+				@dps_full_one_origin;
+			var chart1 = new CanvasJS.Chart("chartContainer1", {
+				animationEnabled: true,
+				zoomEnabled: true,
+				title: {
+					text: "Temperatures from origins EWR, JFK, LGA"
+				},
+				axisX: {
+					gridThickness: 1,
+					title: "Month of Year",
+					labelFormatter: function (e) {
+			return CanvasJS.formatDate(e.value, "MMM YYYY");
+		}
+	},
+				axisY: {
+		gridThickness: 1,
+					title: "Temperature in Celcius",
+				},
+				data: [{
+		type: "scatter",
+					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
+					xValueType: "dateTime",
+					dataPoints: data_xAxisThreeOrigins
+						// Might need to convert String date to Integer date for the above to work when being fed data.
+				}]
+			});
+			chart1.render();
+			var chart2 = new CanvasJS.Chart("chartContainer2", {
+				animationEnabled: true,
+				zoomEnabled: true,
+				title: {
+					text: "Temperatures from origin JFK"
+				},
+				axisX: {
+					gridThickness: 1,
+					title: "Month of Year",
+					labelFormatter: function (e) {
+						return CanvasJS.formatDate(e.value, "MMM YYYY");
+					}
+				},
+				axisY: {
+					gridThickness: 1,
+					title: "Temperature in Celcius",
+				},
+				data: [{
+					type: "scatter",
+					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
+					xValueType: "dateTime",
+					dataPoints: data_xAxisJFKOrigin
+					// Might need to convert String date to Integer date for the above to work when being fed data.
+				}]
+			});
+			chart2.render();
+	}
+	</script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+	<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+	<table class="table-bordered table-responsive">
+		<tr>
+			<th>Origin</th>
+			<th>Temperature</th>
+			<th>Day</th>
+			<th>Month</th>
+		</tr>
+		<tr>
+			<td>"JFK"</td>
+			<td>22.7</td>
+			<td>7</td>
+			<td>10</td>
+		</tr>
+	</table>
+</body>
+</html>

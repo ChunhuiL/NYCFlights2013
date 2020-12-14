@@ -19,7 +19,6 @@ namespace NYCFlights2013.Controllers
             var planesNumM = GetPlanesNumM();
 
             ViewData["planesNumM"] = planesNumM;
-
             return View("~/Views/Home/Plane.cshtml");
 
         }
@@ -27,7 +26,6 @@ namespace NYCFlights2013.Controllers
         public List<Planes> GetPlanesNumM()
         {
             var planesNumM = new List<Planes>();
-
 
             try
             {
@@ -37,7 +35,6 @@ namespace NYCFlights2013.Controllers
                     conn.Open();
 
                     string sql = "select model,count(model) AS number from planes group by model order BY model asc ";
-
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -48,7 +45,6 @@ namespace NYCFlights2013.Controllers
                         {
                             model =         rdr[0].ToString(),
                             number =       rdr[1].ToString(),
-
 
                         });
                     }
@@ -62,7 +58,6 @@ namespace NYCFlights2013.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return planesNumM;
-
         }
     }
 }

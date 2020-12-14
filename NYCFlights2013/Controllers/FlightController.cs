@@ -11,13 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NYCFlights2013.Controllers
 {
+    //Test
     public class FlightController : Controller
     {
         private string CONNECTION_STRING = "server=localhost;user=root;database=flightdb;port=3306;password=12345";
         public IActionResult Index()
         {
             var flights = GetAllFlights();
-
             var numOfFlightsM = GetNumOfFlightsM();
             var meantimeO = GetMeantimeO();
             var numOfFlightsO = GetNumOfFlightsO();
@@ -32,7 +32,6 @@ namespace NYCFlights2013.Controllers
             return View("~/Views/Home/Flight.cshtml");
 
         }
-
         public List<Flights> GetAllFlights()
         {
             var flights = new List<Flights>();
@@ -53,7 +52,6 @@ namespace NYCFlights2013.Controllers
                     {
                         flights.Add(new Flights
                         {
-
                             year = rdr[0].ToString(),
                             month = rdr[1].ToString(),
                             day = rdr[2].ToString(),
@@ -70,13 +68,11 @@ namespace NYCFlights2013.Controllers
                             distance = rdr[13].ToString(),
                             hour = rdr[14].ToString(),
                             minute = rdr[15].ToString()
-
                         });
                     }
                     rdr.Close();
                     conn.Close();
                 }
-
             }
 
             catch (Exception ex)
@@ -85,7 +81,6 @@ namespace NYCFlights2013.Controllers
             }
             return flights;
         }
-
         public List<Flights> GetNumOfFlightsM()
         {
             List<Flights> numOfFlightsM = new List<Flights>();
@@ -259,4 +254,3 @@ namespace NYCFlights2013.Controllers
     }
 }
           
-
