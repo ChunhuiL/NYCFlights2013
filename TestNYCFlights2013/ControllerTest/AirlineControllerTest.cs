@@ -18,25 +18,48 @@ namespace TestNYCFlights2013.ControllerTest
 		{
 			var airlinesTest = controller.GetAllAirlines();
 
+			List<string> carrierList = new List<string>() { 
+				"9E", "AA", "AS", "B6", 
+				"DL", "EV", "F9", "FL", 
+				"HA", "MQ", "OO", "UA", 
+				"US", "VX", "WN", "YV" };
+
+			List<string> nameList = new List<string>() {
+				"Endeavor Air Inc.",
+				"American Airlines Inc.",
+				"Alaska Airlines Inc.",
+				"JetBlue Airways",
+				"Delta Air Lines Inc.",
+				"ExpressJet Airlines Inc.",
+				"Frontier Airlines Inc.",
+				"AirTran Airways Corporation",
+				"Hawaiian Airlines Inc.",
+				"Envoy Air",
+				"SkyWest Airlines Inc.",
+				"United Air Lines Inc.",
+				"US Airways Inc.",
+				"Virgin America",
+				"Southwest Airlines Co.",
+				"Mesa Airlines Inc."
+			};
+
 			int counter = 0;
+
+			Random rnd = new Random();
 
 			foreach (var airTest in airlinesTest)
 			{
+				counter = rnd.Next(0, 15);
 				string nameTest = airTest.name;
 				string carrierTest = airTest.carrier;
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
-				if (counter == 12)
-				{
-					if (nameTest == "US Airways Inc." && carrierTest == "US")
+					if (nameTest == nameList[counter] && carrierTest == carrierList[counter])
 					{
-						// Console.WriteLine(nameTest);
-						// Console.WriteLine(carrierTest);
+						Console.WriteLine(nameTest);
+						Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}
-				counter++;
-			}
 			Assert.Fail();
+			}
 		}
-		}
-}
+	}
