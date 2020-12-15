@@ -54,8 +54,8 @@ namespace TestNYCFlights2013.ControllerTest
 				string carrierTest = airTest.carrier;
 					if (nameTest == nameList[counter] && carrierTest == carrierList[counter])
 					{
-						Console.WriteLine(nameTest);
-						Console.WriteLine(carrierTest);
+						//Console.WriteLine(nameTest);
+						//Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}
