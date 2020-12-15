@@ -96,7 +96,6 @@ namespace NYCFlights2013.Controllers
                 {
                     conn.Open();
 
-                    //string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS celsius, day, month, year FROM weather";
                     string sql = "SELECT origin, ROUND(((temp - 32) * 5.0 / 9), 2) AS temp FROM weather WHERE temp IS NOT NULL";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
