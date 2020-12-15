@@ -53,7 +53,7 @@ namespace TestNYCFlights2013.ControllerTest
 				string originTest = meanOTest.origin;
 				string meantimeTest = meanOTest.meantime;
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
-				if (counter == 2)
+				if (counter == 1)
 				{
 					if (originTest == "JFK" && meantimeTest == "235.3726")
 					{
@@ -132,7 +132,7 @@ namespace TestNYCFlights2013.ControllerTest
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 2)
 				{
-					if (originTest == "JFK" && delayDTest == "8.7551" && delayATest == "-0.0746")
+					if (originTest == "LGA" && delayDTest == "7.8196" && delayATest == "2.3666")
 					{
 						// Console.WriteLine(nameTest);
 						// Console.WriteLine(carrierTest);

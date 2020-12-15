@@ -35,7 +35,7 @@ namespace TestNYCFlights2013.ControllerTest
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 12)
 				{
-					if (faaTest == "17G" && nameTest == "Port Bucyrus-Crawford County Airport" && latTest == "41" && lonTest == "-83" 
+					if (faaTest == "17G" && nameTest == "Port Bucyrus-Crawford County Airport" && latTest == "40.7815556000" && lonTest == "-82.97480560"
 						&& altTest == "1003" && tzTest == "-5" && dstTest == "A" && tzoneTest == "America/New_York")
 					{
 						 Console.WriteLine(faaTest);
