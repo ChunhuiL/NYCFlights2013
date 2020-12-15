@@ -13,6 +13,7 @@ namespace NYCFlights2013.Controllers
 {
     public class PlaneController : Controller
     {
+
     ConnectionDB connDB = new ConnectionDB();
         public IActionResult Index()
         {
