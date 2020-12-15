@@ -29,7 +29,7 @@ namespace TestNYCFlights2013.ControllerTest
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
-					if (originTest == "EWR" && tempTest == "3.90")
+					if (originTest == "EWR" && tempTest == "3.89")
 					{
 						// Console.WriteLine(nameTest);
 						// Console.WriteLine(carrierTest);
@@ -84,7 +84,7 @@ namespace TestNYCFlights2013.ControllerTest
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
-					if (originTest == "JFK" && tempTest == "3.90" && dayTest == "1"
+					if (originTest == "JFK" && tempTest == "3.89" && dayTest == "1"
 						&& monthTest == "1" && yearTest == "2013")
 					{
 						// Console.WriteLine(nameTest);
@@ -113,7 +113,7 @@ namespace TestNYCFlights2013.ControllerTest
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
-					if (originTest == "EWR" && meanTest == "3.32" && dayTest == "6"
+					if (originTest == "EWR" && meanTest == "3.33" && dayTest == "6"
 						&& monthTest == "1" && yearTest == "2013")
 					{
 						// Console.WriteLine(nameTest);
@@ -142,7 +142,7 @@ namespace TestNYCFlights2013.ControllerTest
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
-					if (originTest == "JFK" && meanTest == "3.03" && dayTest == "6"
+					if (originTest == "JFK" && meanTest == "3.06" && dayTest == "6"
 						&& monthTest == "1" && yearTest == "2013")
 					{
 						

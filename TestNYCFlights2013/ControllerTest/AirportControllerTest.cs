@@ -33,16 +33,17 @@ namespace TestNYCFlights2013.ControllerTest
 				string dstTest = airTest.dst;
 				string tzoneTest = airTest.tzone;
 				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
-				if (counter == 12)
+				if (counter == 6)
 				{
-					if (faaTest == "17G" && nameTest == "Port Bucyrus-Crawford County Airport" && latTest == "40.7815556000" && lonTest == "-82.97480560"
-						&& altTest == "1003" && tzTest == "-5" && dstTest == "A" && tzoneTest == "America/New_York")
+					if (faaTest == "0G6" && nameTest == "Williams County Airport" && latTest == "41" && lonTest == "-85"
+						&& altTest == "730" && tzTest == "-5" && dstTest == "A" && tzoneTest == "America/New_York")
 					{
-						 Console.WriteLine(faaTest);
-						 Console.WriteLine(nameTest);
+						
 						Assert.Pass();
 					}
 				}
+				Console.WriteLine(faaTest);
+				Console.WriteLine(nameTest);
 				counter++;
 			}
 			Assert.Fail();
