@@ -24,5 +24,6 @@ namespace NYCFlights2013.Models
 		public string pressure { get; set; }
 		public string visib { get; set; }
 		public string time_hour { get; set; }
+		public string mean { get; set; }
 	}
 }
