@@ -10,6 +10,7 @@
     <PackageReference Include="MySql.Data" Version="8.0.22" />
     <PackageReference Include="MySql.Data.Entity" Version="6.10.9" />
     <PackageReference Include="MySqlConnector" Version="1.2.0" />
+    <PackageReference Include="Npm" Version="3.5.2" />
   </ItemGroup>
 
 </Project>
