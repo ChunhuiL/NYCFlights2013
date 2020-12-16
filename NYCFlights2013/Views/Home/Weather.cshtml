@@ -2,52 +2,53 @@
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
-	var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
-	var temp_attribute_celcius_date = (List<Weather>)ViewData["temp_attribute_celcius_date"]; 
-	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
+    var weatherObs = (List<Weather>)ViewData["weatherObs"];
+    var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
+    var temp_attribute_celcius_date = (List<Weather>)ViewData["temp_attribute_celcius_date"];
+    var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
 
-	var temp_attribute_daily_mean = (List<Weather>)ViewData["temp_attribute_daily_mean"];
-	var temp_attribute_daily_mean_JFK = (List<Weather>)ViewData["temp_attribute_daily_mean_JFK"];
+    var temp_attribute_daily_mean = (List<Weather>)ViewData["temp_attribute_daily_mean"];
+    var temp_attribute_daily_mean_JFK = (List<Weather>)ViewData["temp_attribute_daily_mean_JFK"];
 
-	int globalCounterAllOrigins = 6000; // How many rows to extract
-	int globalCounterJFKOrigin = 6000; // How many rows to extract
+    int globalCounterAllOrigins = 6000; // How many rows to extract
+    int globalCounterJFKOrigin = 6000; // How many rows to extract
 
-	// Extract all three origins
-	string dps_full_three_origins = "";
-	for (int i = 0; i <= globalCounterAllOrigins; i++)
-	{
+    // Extract all three origins
+    string dps_full_three_origins = "";
+    for (int i = 0; i <= globalCounterAllOrigins; i++)
+    {
 
-		string dps_three_origins = "{x: new Date(2011, 12, 9), y: 22},"
-			.Replace("2011", temp_attribute_celcius_date[i].year)
-			.Replace("12", temp_attribute_celcius_date[i].month)
-			.Replace("9", temp_attribute_celcius_date[i].day)
-			.Replace("22", temp_attribute_celcius[i].temp);
+        string dps_three_origins = "{x: new Date(2011, 12, 9), y: 22},"
+            .Replace("2011", temp_attribute_celcius_date[i].year)
+            .Replace("12", temp_attribute_celcius_date[i].month)
+            .Replace("9", temp_attribute_celcius_date[i].day)
+            .Replace("22", temp_attribute_celcius[i].temp);
 
-		if (i == globalCounterAllOrigins)
-		{
-			dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
-			dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
-		}
+        if (i == globalCounterAllOrigins)
+        {
+            dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
+            dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
+        }
 
-		dps_full_three_origins += dps_three_origins;
-	}
+        dps_full_three_origins += dps_three_origins;
+    }
 
-	// Extract JFK origin
-	string dps_full_one_origin = "";
-	for (int i = 0; i <= globalCounterJFKOrigin; i++)
-	{
-		string dps_one_origin = "{x: new Date(2011, 12, 9), y: 22},"
-			.Replace("2011", temp_attribute_celciusJFK[i].year)
-			.Replace("12", temp_attribute_celciusJFK[i].month)
-			.Replace("9", temp_attribute_celciusJFK[i].day)
-			.Replace("22", temp_attribute_celciusJFK[i].temp);
-		if (i == globalCounterJFKOrigin)
-		{
-			dps_one_origin = dps_one_origin.Remove(dps_one_origin.Length - 1);
-			dps_one_origin = dps_one_origin.Insert(dps_one_origin.Length, "]");
-		}
-		dps_full_one_origin += dps_one_origin;
-	}
+    // Extract JFK origin
+    string dps_full_one_origin = "";
+    for (int i = 0; i <= globalCounterJFKOrigin; i++)
+    {
+        string dps_one_origin = "{x: new Date(2011, 12, 9), y: 22},"
+            .Replace("2011", temp_attribute_celciusJFK[i].year)
+            .Replace("12", temp_attribute_celciusJFK[i].month)
+            .Replace("9", temp_attribute_celciusJFK[i].day)
+            .Replace("22", temp_attribute_celciusJFK[i].temp);
+        if (i == globalCounterJFKOrigin)
+        {
+            dps_one_origin = dps_one_origin.Remove(dps_one_origin.Length - 1);
+            dps_one_origin = dps_one_origin.Insert(dps_one_origin.Length, "]");
+        }
+        dps_full_one_origin += dps_one_origin;
+    }
 }
 <!DOCTYPE HTML>
 <html>
@@ -137,71 +138,155 @@
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
-	<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-	<center><b>The daily mean temperature in Celcius for each origin:</b></center>
-		<table class="table-bordered table-responsive">
-			<tr>
-				<th>Origin</th>
-				<th>Mean Temp</th>
-				<th>Day</th>
-				<th>Month</th>
-				<th>Year</th>
-			</tr>
-			@{ foreach (var dailyMean in temp_attribute_daily_mean)
-				{
-					<tr>
-						<td class="table-info">
-							@dailyMean.origin
-						</td>
-						<td>
-							@dailyMean.mean
-						</td>
-						<td>
-							@dailyMean.day
-						</td>
-						<td>
-							@dailyMean.month
-						</td>
-						<td>
-							@dailyMean.year
-						</td>
-					</tr>
-				}
-			}
-		</table>
-		<hr style="height:4px;border-top:4px solid black" />
-		<center><b>The daily mean temperature in Celcius at JFK:</b></center>
-		<table class="table-bordered table-responsive">
-			<tr>
-				<th>Origin</th>
-				<th>Mean Temp</th>
-				<th>Day</th>
-				<th>Month</th>
-				<th>Year</th>
-			</tr>
-			@{ foreach (var dailyMeanJFK in temp_attribute_daily_mean_JFK)
-				{
-					<tr>
-						<td class="table-info">
-							@dailyMeanJFK.origin
-						</td>
-						<td>
-							@dailyMeanJFK.mean
-						</td>
-						<td>
-							@dailyMeanJFK.day
-						</td>
-						<td>
-							@dailyMeanJFK.month
-						</td>
-						<td>
-							@dailyMeanJFK.year
-						</td>
-					</tr>
-				}
-			}
-		</table>
-		<hr style="height:4px;border-top:4px solid black" />
+    <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+    <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+    <center>
+        <h1>Weather Observations</h1>
+        <div class="table">
+            <table>
+                <tr class="table-active">
+                    <td>Origin</td>
+                    <td>Weather Observations</td>
+                </tr>
+                @{ foreach (var item in weatherObs)
+                    {
+                        <tr>
+                            <td class="table-info">
+                                @item.origin
+                            </td>
+
+
+                            <td class="table-active">
+                                @item.observations
+                            </td>
+                        </tr>
+                    } }
+            </table>
+        </div>
+    </center>
+
+
+
+    <section class="content-header">
+        <h1>Weather Observation Chart</h1>
+    </section>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/echarts/echarts.js"></script>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="myechart" style="width: 100%; height: 500px;">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @{
+        List<string> listx = new List<string>();
+        List<string> listy = new List<string>();
+        foreach (var item in weatherObs)
+        {
+            listx.Add(item.origin);
+        }
+        foreach (var item in weatherObs)
+        {
+            listy.Add(item.observations);
+        }
+    }
+    <script type="text/javascript">
+		var myEChart = echarts.init(document.getElementById('myechart'));
+		var option = {
+			title: {
+				text: 'Weather Observations '
+			},
+			tooltip: {},
+			legend: {
+				data: ['resource']
+			},
+			xAxis: [{
+				name: 'Origins',
+				type: 'category',
+				data: ['@listx[0]', '@listx[1]', '@listx[2]']
+			}],
+			yAxis: [{
+				name: 'observations',
+				type: 'value'
+			}],
+			series: [{
+				name: 'numbers',
+				type: 'bar',
+				barWidth: '40%',
+				data: [@listy[0], @listy[1], @listy[2]]
+			}]
+		};
+		myEChart.setOption(option);</script>
+    <center><b>The daily mean temperature in Celcius for each origin:</b></center>
+    <table class="table-bordered table-responsive">
+        <tr>
+            <th>Origin</th>
+            <th>Mean Temp</th>
+            <th>Day</th>
+            <th>Month</th>
+            <th>Year</th>
+        </tr>
+        @{ foreach (var dailyMean in temp_attribute_daily_mean)
+            {
+                <tr>
+                    <td class="table-info">
+                        @dailyMean.origin
+                    </td>
+                    <td>
+                        @dailyMean.mean
+                    </td>
+                    <td>
+                        @dailyMean.day
+                    </td>
+                    <td>
+                        @dailyMean.month
+                    </td>
+                    <td>
+                        @dailyMean.year
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <hr style="height:4px;border-top:4px solid black" />
+    <center><b>The daily mean temperature in Celcius at JFK:</b></center>
+    <table class="table-bordered table-responsive">
+        <tr>
+            <th>Origin</th>
+            <th>Mean Temp</th>
+            <th>Day</th>
+            <th>Month</th>
+            <th>Year</th>
+        </tr>
+        @{ foreach (var dailyMeanJFK in temp_attribute_daily_mean_JFK)
+            {
+                <tr>
+                    <td class="table-info">
+                        @dailyMeanJFK.origin
+                    </td>
+                    <td>
+                        @dailyMeanJFK.mean
+                    </td>
+                    <td>
+                        @dailyMeanJFK.day
+                    </td>
+                    <td>
+                        @dailyMeanJFK.month
+                    </td>
+                    <td>
+                        @dailyMeanJFK.year
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <hr style="height:4px;border-top:4px solid black" />
+
+
+
 </body>
 </html>
