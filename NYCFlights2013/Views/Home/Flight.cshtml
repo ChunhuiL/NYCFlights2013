@@ -11,7 +11,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <script type="text/javascript">
+	<script type="text/javascript">
 		window.onload = function () {
 			var chart1 = new CanvasJS.Chart("chartContainer1",
 				{
@@ -29,9 +29,9 @@
 						{
 							color: "#B0D0B0",
 							type: "column",
-							showInLegend: true,
-							legendMarkerType: "none",
-							legendText: "",
+							showInLegend: false,
+							legendMarkerType: "square",
+							legendText: "Month Codename",
 							dataPoints: [
 								{ x: 1, y: @topdest[0].top10, label: "ORD" },
 								{ x: 2, y: @topdest[1].top10, label: "LAX" },
@@ -64,9 +64,9 @@
                             {
                                 color: "#B0D0B0",
                                 type: "column",
-                                showInLegend: true,
-                                legendMarkerType: "none",
-                                legendText: "",
+                                showInLegend: false,
+                                legendMarkerType: "square",
+                                legendText: "Monthly Value",
                                 dataPoints: [
                                     { x: 1, y: @numOfFlightsM[0].number, label: "Jan" },
                                     { x: 2, y: @numOfFlightsM[1].number, label: "Feb" },
@@ -99,11 +99,11 @@
                         },
                         data: [
                             {
-                                color: "#B0D0B0",
+								color: "#F00",
                                 type: "column",
                                 showInLegend: true,
-                                legendMarkerType: "none",
-                                legendText: "",
+                                legendMarkerType: "square",
+                                legendText: "EWR",
                                 dataPoints: [
                                     { x: 1, y: @numOfFlightsO[0].numberO, label: "Jan" },
                                     { x: 2, y: @numOfFlightsO[1].numberO, label: "Feb" },
@@ -120,11 +120,11 @@
                                 ]
                             },
                              {
-                                color: "#B0D0B0",
+								color: "#00FF00",
                                 type: "column",
                                 showInLegend: true,
-                                legendMarkerType: "none",
-                                legendText: "",
+                                legendMarkerType: "square",
+                                legendText: "JFK",
                                 dataPoints: [
                                     { x: 1, y: @numOfFlightsO[12].numberO, label: "Jan" },
                                     { x: 2, y: @numOfFlightsO[13].numberO, label: "Feb" },
@@ -141,11 +141,11 @@
                                 ]
                             },
                               {
-                                color: "#B0D0B0",
+								color: "#0000FF",
                                 type: "column",
                                 showInLegend: true,
-                                legendMarkerType: "none",
-                                legendText: "",
+                                legendMarkerType: "square",
+                                legendText: "LGA",
                                 dataPoints: [
                                     { x: 1, y: @numOfFlightsO[24].numberO, label: "Jan" },
                                     { x: 2, y: @numOfFlightsO[25].numberO, label: "Feb" },
@@ -164,8 +164,86 @@
                         ]
                     });
             chart3.render();
+			var chart4 = new CanvasJS.Chart("chartContainer4",
+				{
+					title: {
+						text: "Number of Flights per month by Origin stacked"
+                    },
+					dataPointWidth: 60,
+					data: [
+						{
+							color: "#F00",
+                            type: "stackedColumn",
+							legendText: "EWR",
+                            showInLegend: "true",
+							indexLabelPlacement: "outside",
+							dataPoints: [
+								{ y: @numOfFlightsO[0].numberO, label: "January" },
+								{ y: @numOfFlightsO[1].numberO, label: "February" },
+								{ y: @numOfFlightsO[2].numberO, label: "March" },
+								{ y: @numOfFlightsO[3].numberO, label: "April" },
+								{ y: @numOfFlightsO[4].numberO, label: "May" },
+                                { y: @numOfFlightsO[5].numberO, label: "June" },
+                                { y: @numOfFlightsO[6].numberO, label: "July" },
+                                { y: @numOfFlightsO[7].numberO, label: "August" },
+                                { y: @numOfFlightsO[8].numberO, label: "September" },
+                                { y: @numOfFlightsO[9].numberO, label: "October" },
+                                { y: @numOfFlightsO[10].numberO, label: "November" },
+                                { y: @numOfFlightsO[11].numberO, label: "December"}
+							]
+                        }, {
+							color: "#00FF00",
+							type: "stackedColumn",
+							legendText: "JFK",
+							showInLegend: "true",
+							dataPoints: [
+								{ y: @numOfFlightsO[12].numberO, label: "January" },
+								{ y: @numOfFlightsO[13].numberO, label: "February" },
+								{ y: @numOfFlightsO[14].numberO, label: "March" },
+								{ y: @numOfFlightsO[15].numberO, label: "April" },
+								{ y: @numOfFlightsO[16].numberO, label: "May" },
+                                { y: @numOfFlightsO[17].numberO, label: "June" },
+                                { y: @numOfFlightsO[18].numberO, label: "July" },
+                                { y: @numOfFlightsO[19].numberO, label: "August" },
+                                { y: @numOfFlightsO[20].numberO, label: "September" },
+                                { y: @numOfFlightsO[21].numberO, label: "October" },
+                                { y: @numOfFlightsO[22].numberO, label: "November" },
+                                { y: @numOfFlightsO[23].numberO, label: "December"}
+							]
+                        },
+                        {
+							color: "#0000FF",
+							type: "stackedColumn",
+							legendText: "LGA",
+							showInLegend: "true",
+							indexLabel: "#total",
+							indexLabelPlacement: "outside",
+							dataPoints: [
+								{ y: @numOfFlightsO[24].numberO, label: "January" },
+								{ y: @numOfFlightsO[25].numberO, label: "February" },
+								{ y: @numOfFlightsO[26].numberO, label: "March" },
+								{ y: @numOfFlightsO[27].numberO, label: "April" },
+								{ y: @numOfFlightsO[28].numberO, label: "May" },
+                                { y: @numOfFlightsO[29].numberO, label: "June" },
+                                { y: @numOfFlightsO[30].numberO, label: "July" },
+                                { y: @numOfFlightsO[31].numberO, label: "August" },
+                                { y: @numOfFlightsO[32].numberO, label: "September" },
+                                { y: @numOfFlightsO[33].numberO, label: "October" },
+                                { y: @numOfFlightsO[34].numberO, label: "November" },
+                                { y: @numOfFlightsO[35].numberO, label: "December"}
+							]
+						}
+					]
+				});
+            chart4.render();
+			chart4.set("dataPointWidth", Math.ceil(chart.axisX[00].bounds.width / chart4.data[10].dataPoints.length), true);
+
+			//On Resize chart width changes so as the plotArea, so dataPointWidth will vary according to width
+			$(window).resize(function () {
+				chart4.set("dataPointWidth", Math.ceil(chart4.axisX[0].bounds.width / chart4.data[10].dataPoints.length), true);
+			});
 		}
-    </script>
+	</script>
     <section class="content">
         <div>
             <table class="table-bordered table-responsive">
@@ -213,9 +291,10 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-    <div id="chartContainer1" style="height: 300px; width: 100%;"> </div>
-    <div id="chartContainer2" style="height: 300px; width: 100%;"> </div>
-    <div id="chartContainer3" style="height: 300px; width: 100%;"> </div>
+	<div id="chartContainer1" style="height: 300px; width: 100%;"> </div>
+	<div id="chartContainer2" style="height: 300px; width: 100%;"> </div>
+	<div id="chartContainer3" style="height: 300px; width: 100%;"> </div>
+	<div id="chartContainer4" style="height: 300px; width: 100%;"> </div>
 </body>
 </html>
 }
