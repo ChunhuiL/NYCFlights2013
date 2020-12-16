@@ -38,7 +38,7 @@ namespace NYCFlights2013.Controllers
 
                     conn.Open();
 
-                    string sql = "select model,count(model) AS number from planes group by model order BY model asc ";
+                    string sql = "SELECT planes.manufacturer, COUNT(*) AS nrPlanes FROM planes GROUP BY planes.manufacturer HAVING planes.manufacturer = 'AIRBUS' OR planes.manufacturer = 'AIRBUS INDUSTRIE'";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -47,8 +47,8 @@ namespace NYCFlights2013.Controllers
                     {
                         planesNumM.Add(new Planes
                         {
-                            model =         rdr[0].ToString(),
-                            number =       rdr[1].ToString(),
+                            manufacturer =         rdr[0].ToString(),
+                            numberOfPlanes =       rdr[1].ToString(),
 
                         });
                     }
@@ -141,5 +141,6 @@ namespace NYCFlights2013.Controllers
             return numberOfFlMan;
 
         }
+        
     }
 }
