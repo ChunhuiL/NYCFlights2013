@@ -26,6 +26,7 @@ namespace NYCFlights2013.Controllers
 
             var temp_attribute_daily_mean = GetDailyMeanTemp();
             var temp_attribute_daily_mean_JFK = GetDailyMeanTempJFK();
+            var weatherObs = GetWeatherOb();
 
             ViewData["weather"] = weather;
             ViewData["temp_attribute_celcius"] = temp_attribute_celcius;
@@ -34,6 +35,7 @@ namespace NYCFlights2013.Controllers
 
             ViewData["temp_attribute_daily_mean"] = temp_attribute_daily_mean;
             ViewData["temp_attribute_daily_mean_JFK"] = temp_attribute_daily_mean_JFK;
+            ViewData["weatherObs"] = weatherObs;
 
             return View("~/Views/Home/Weather.cshtml");
 
@@ -86,6 +88,40 @@ namespace NYCFlights2013.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return all_weather;
+        }
+        public List<Weather> GetWeatherOb()
+        {
+            var weatherOb = new List<Weather>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
+                {
+
+                    conn.Open();
+
+                    string sql = "select weather.origin,count(*) AS `Weather Observations` from weather group by origin;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+
+                    while (rdr.Read())
+                    {
+                        weatherOb.Add(new Weather
+                        {
+                            origin = rdr[0].ToString(),
+                            observations = rdr[1].ToString()
+
+                        });
+                    }
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return weatherOb;
         }
         public List<Weather> GetWeatherTemp()
         {
