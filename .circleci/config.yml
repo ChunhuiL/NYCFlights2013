@@ -5,5 +5,3 @@ workflows:
   node-tests:
     jobs:
       - node/test
-      - node/install-packages:
-          app-dir: ~/mern-starter
