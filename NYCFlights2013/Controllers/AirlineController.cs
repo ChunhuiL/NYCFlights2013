@@ -13,7 +13,6 @@ namespace NYCFlights2013.Controllers
 {
     public class AirlineController : Controller
     {
-
 		ConnectionDB connDB = new ConnectionDB();
 
 

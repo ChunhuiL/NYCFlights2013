@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+<<<<<<< HEAD
+=======
+
+>>>>>>> Liu
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ChunhuiL/NYCFlights2013.git"
