@@ -17,7 +17,7 @@ jobs:
           app-dir: ~/mern-starter
           cache-path: node_modules
           override-ci-command: npm i
-          :working_directory:CIRCLE_WORKING_DIRECTORY
+          working_directory:~/mern-starter
           # Save workspace for subsequent jobs (i.e. test)
       - persist_to_workspace:
           root: .
