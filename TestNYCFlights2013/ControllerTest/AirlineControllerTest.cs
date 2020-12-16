@@ -18,10 +18,10 @@ namespace TestNYCFlights2013.ControllerTest
 		{
 			var airlinesTest = controller.GetAllAirlines();
 
-			List<string> carrierList = new List<string>() { 
-				"9E", "AA", "AS", "B6", 
-				"DL", "EV", "F9", "FL", 
-				"HA", "MQ", "OO", "UA", 
+			List<string> carrierList = new List<string>() {
+				"9E", "AA", "AS", "B6",
+				"DL", "EV", "F9", "FL",
+				"HA", "MQ", "OO", "UA",
 				"US", "VX", "WN", "YV" };
 
 			List<string> nameList = new List<string>() {
@@ -52,14 +52,12 @@ namespace TestNYCFlights2013.ControllerTest
 				counter = rnd.Next(0, 15);
 				string nameTest = airTest.name;
 				string carrierTest = airTest.carrier;
-					if (nameTest == nameList[counter] && carrierTest == carrierList[counter])
-					{
-						//Console.WriteLine(nameTest);
-						//Console.WriteLine(carrierTest);
-						Assert.Pass();
-					}
+				if (nameTest == nameList[counter] && carrierTest == carrierList[counter])
+				{
+					Assert.Pass();
 				}
-			Assert.Fail();
 			}
+			Assert.Fail();
 		}
 	}
+}
