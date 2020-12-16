@@ -68,5 +68,6 @@ namespace TestNYCFlights2013.ControllerTest
 			}
 			Assert.Fail();
 		}
+		//Tests passed
 	}
 }
