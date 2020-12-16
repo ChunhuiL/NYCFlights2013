@@ -38,7 +38,7 @@ namespace TestNYCFlights2013.ControllerTest
 					if (faaTest == "0G6" && nameTest == "Williams County Airport" && latTest == "41" && lonTest == "-85"
 						&& altTest == "730" && tzTest == "-5" && dstTest == "A" && tzoneTest == "America/New_York")
 					{
-
+						
 						Assert.Pass();
 					}
 				}

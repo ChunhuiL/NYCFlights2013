@@ -16,7 +16,7 @@ namespace NYCFlights2013.Controllers
     public class WeatherController : Controller
     {
 
-    ConnectionDB connDB = new ConnectionDB();
+        ConnectionDB connDB = new ConnectionDB();
         public IActionResult Index()
         {
             var weather = GetAllWeather();
@@ -26,6 +26,7 @@ namespace NYCFlights2013.Controllers
 
             var temp_attribute_daily_mean = GetDailyMeanTemp();
             var temp_attribute_daily_mean_JFK = GetDailyMeanTempJFK();
+            var weatherObs = GetWeatherOb();
 
             ViewData["weather"] = weather;
             ViewData["temp_attribute_celcius"] = temp_attribute_celcius;
@@ -34,6 +35,7 @@ namespace NYCFlights2013.Controllers
 
             ViewData["temp_attribute_daily_mean"] = temp_attribute_daily_mean;
             ViewData["temp_attribute_daily_mean_JFK"] = temp_attribute_daily_mean_JFK;
+            ViewData["weatherObs"] = weatherObs;
 
             return View("~/Views/Home/Weather.cshtml");
 
@@ -59,21 +61,21 @@ namespace NYCFlights2013.Controllers
                     {
                         all_weather.Add(new Weather
                         {
-                            origin =        rdr[0].ToString(),
-                            year =          rdr[1].ToString(),
-                            month =         rdr[2].ToString(),
-                            day =           rdr[3].ToString(),
-                            hour =          rdr[4].ToString(),
-                            temp =          rdr[5].ToString(),
-                            dewp =          rdr[6].ToString(),
-                            humid =         rdr[7].ToString(),
-                            wind_dir =      rdr[8].ToString(),
-                            wind_speed =    rdr[9].ToString(),
-                            wind_gust =     rdr[10].ToString(),
-                            precip =        rdr[11].ToString(),
-                            pressure =      rdr[12].ToString(),
-                            visib =         rdr[13].ToString(),
-                            time_hour =     rdr[14].ToString()
+                            origin = rdr[0].ToString(),
+                            year = rdr[1].ToString(),
+                            month = rdr[2].ToString(),
+                            day = rdr[3].ToString(),
+                            hour = rdr[4].ToString(),
+                            temp = rdr[5].ToString(),
+                            dewp = rdr[6].ToString(),
+                            humid = rdr[7].ToString(),
+                            wind_dir = rdr[8].ToString(),
+                            wind_speed = rdr[9].ToString(),
+                            wind_gust = rdr[10].ToString(),
+                            precip = rdr[11].ToString(),
+                            pressure = rdr[12].ToString(),
+                            visib = rdr[13].ToString(),
+                            time_hour = rdr[14].ToString()
                         });
                     }
                     rdr.Close();
@@ -86,6 +88,40 @@ namespace NYCFlights2013.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return all_weather;
+        }
+        public List<Weather> GetWeatherOb()
+        {
+            var weatherOb = new List<Weather>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
+                {
+
+                    conn.Open();
+
+                    string sql = "select weather.origin,count(*) AS `Weather Observations` from weather group by origin;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+
+                    while (rdr.Read())
+                    {
+                        weatherOb.Add(new Weather
+                        {
+                            origin = rdr[0].ToString(),
+                            observations = rdr[1].ToString()
+
+                        });
+                    }
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return weatherOb;
         }
         public List<Weather> GetWeatherTemp()
         {
@@ -234,41 +270,41 @@ namespace NYCFlights2013.Controllers
         }
 
         public List<Weather> GetDailyMeanTempJFK()
-          {
-              List<Weather> temp_attribute_daily_mean_JFK = new List<Weather>();
-              try
-              {
-                  using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
-                  {
-                      conn.Open();
+        {
+            List<Weather> temp_attribute_daily_mean_JFK = new List<Weather>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
+                {
+                    conn.Open();
 
-                      string sql = "SELECT origin, year, month, day, ROUND((SUM((temp - 32) * 5.0 / 9) /24), 2) AS mean FROM weather WHERE origin LIKE '%JFK%' GROUP BY origin,year,month,day";
-                      MySqlCommand cmd = new MySqlCommand(sql, conn);
-                      MySqlDataReader rdr = cmd.ExecuteReader();
+                    string sql = "SELECT origin, year, month, day, ROUND((SUM((temp - 32) * 5.0 / 9) /24), 2) AS mean FROM weather WHERE origin LIKE '%JFK%' GROUP BY origin,year,month,day";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
 
-                      while (rdr.Read())
-                      {
+                    while (rdr.Read())
+                    {
 
-                          temp_attribute_daily_mean_JFK.Add(new Weather
-                          {
-                              origin = rdr[0].ToString(),
-                              year = rdr[1].ToString(),
-                              month = rdr[2].ToString(),
-                              day = rdr[3].ToString(),
-                              mean = rdr[4].ToString()
-                          });
-                      }
+                        temp_attribute_daily_mean_JFK.Add(new Weather
+                        {
+                            origin = rdr[0].ToString(),
+                            year = rdr[1].ToString(),
+                            month = rdr[2].ToString(),
+                            day = rdr[3].ToString(),
+                            mean = rdr[4].ToString()
+                        });
+                    }
 
-                      rdr.Close();
-                      conn.Close();
-                  }
-              }
-              catch (Exception ex)
-              {
-                  Console.WriteLine(ex.ToString());
-              }
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
-              return temp_attribute_daily_mean_JFK;
-          }
+            return temp_attribute_daily_mean_JFK;
+        }
     }
 }
