@@ -5,7 +5,7 @@ orbs:
   
 jobs:
   build:
-    working_directory: ~/mern-starter
+    working_directory: NYCFlights2013
     # Reuse Docker container specification given by the node Orb
     executor: node/default
     steps:
