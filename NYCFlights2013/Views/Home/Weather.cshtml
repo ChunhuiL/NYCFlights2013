@@ -1,10 +1,9 @@
 ﻿@{
-
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
 	var temp_attribute_celcius = (List<Weather>)ViewData["temp_attribute_celcius"];
-	var temp_attribute_celcius_date = (List<Weather>)ViewData["temp_attribute_celcius_date"];
+	var temp_attribute_celcius_date = (List<Weather>)ViewData["temp_attribute_celcius_date"]; 
 	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
 
 	var temp_attribute_daily_mean = (List<Weather>)ViewData["temp_attribute_daily_mean"];
@@ -49,9 +48,7 @@
 		}
 		dps_full_one_origin += dps_one_origin;
 	}
-
-	}
-
+}
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -107,7 +104,6 @@
 					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
 					xValueType: "dateTime",
 					dataPoints: data_xAxisThreeOrigins
-						// Might need to convert String date to Integer date for the above to work when being fed data.
 				}]
 			});
 			chart1.render();
@@ -133,7 +129,6 @@
 					toolTipContent: "<b>Date: </b>{x} <br/><b>Temperature: </b>{y}°C",
 					xValueType: "dateTime",
 					dataPoints: data_xAxisJFKOrigin
-					// Might need to convert String date to Integer date for the above to work when being fed data.
 				}]
 			});
 			chart2.render();
@@ -144,35 +139,69 @@
 <body>
 	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
 	<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-	<table class="table-bordered table-responsive">
-		<tr>
-			<th>Origin</th>
-			<th>Mean Temp</th>
-			<th>Day</th>
-			<th>Month</th>
-			<th>Year</th>
-		</tr>
-		@{ foreach (var dailyMean in temp_attribute_daily_mean)
-			{
-				<tr>
-					<td class="table-info">
-						@dailyMean.origin
-					</td>
-					<td>
-						@dailyMean.mean
-					</td>
-					<td>
-						@dailyMean.day
-					</td>
-					<td>
-						@dailyMean.month
-					</td>
-					<td>
-						@dailyMean.year
-					</td>
-				</tr>
+	<center><b>The daily mean temperature in Celcius for each origin:</b></center>
+		<table class="table-bordered table-responsive">
+			<tr>
+				<th>Origin</th>
+				<th>Mean Temp</th>
+				<th>Day</th>
+				<th>Month</th>
+				<th>Year</th>
+			</tr>
+			@{ foreach (var dailyMean in temp_attribute_daily_mean)
+				{
+					<tr>
+						<td class="table-info">
+							@dailyMean.origin
+						</td>
+						<td>
+							@dailyMean.mean
+						</td>
+						<td>
+							@dailyMean.day
+						</td>
+						<td>
+							@dailyMean.month
+						</td>
+						<td>
+							@dailyMean.year
+						</td>
+					</tr>
+				}
 			}
-		}
-	</table>
+		</table>
+		<hr style="height:4px;border-top:4px solid black" />
+		<center><b>The daily mean temperature in Celcius at JFK:</b></center>
+		<table class="table-bordered table-responsive">
+			<tr>
+				<th>Origin</th>
+				<th>Mean Temp</th>
+				<th>Day</th>
+				<th>Month</th>
+				<th>Year</th>
+			</tr>
+			@{ foreach (var dailyMeanJFK in temp_attribute_daily_mean_JFK)
+				{
+					<tr>
+						<td class="table-info">
+							@dailyMeanJFK.origin
+						</td>
+						<td>
+							@dailyMeanJFK.mean
+						</td>
+						<td>
+							@dailyMeanJFK.day
+						</td>
+						<td>
+							@dailyMeanJFK.month
+						</td>
+						<td>
+							@dailyMeanJFK.year
+						</td>
+					</tr>
+				}
+			}
+		</table>
+		<hr style="height:4px;border-top:4px solid black" />
 </body>
 </html>
