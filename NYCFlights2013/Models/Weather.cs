@@ -25,5 +25,7 @@ namespace NYCFlights2013.Models
 		public string visib { get; set; }
 		public string time_hour { get; set; }
 		public string mean { get; set; }
+		public string observations { get; set; }
+
 	}
 }

@@ -1,4 +1,5 @@
 ﻿@{
+
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
@@ -6,31 +7,31 @@
 	var temp_attribute_celcius_date = (List<Weather>)ViewData["temp_attribute_celcius_date"]; 
 	var temp_attribute_celciusJFK = (List<Weather>)ViewData["temp_attribute_celciusJFK"];
 
-	var temp_attribute_daily_mean = (List<Weather>)ViewData["temp_attribute_daily_mean"];
-	var temp_attribute_daily_mean_JFK = (List<Weather>)ViewData["temp_attribute_daily_mean_JFK"];
+    var temp_attribute_daily_mean = (List<Weather>)ViewData["temp_attribute_daily_mean"];
+    var temp_attribute_daily_mean_JFK = (List<Weather>)ViewData["temp_attribute_daily_mean_JFK"];
 
-	int globalCounterAllOrigins = 6000; // How many rows to extract
-	int globalCounterJFKOrigin = 6000; // How many rows to extract
+    int globalCounterAllOrigins = 6000; // How many rows to extract
+    int globalCounterJFKOrigin = 6000; // How many rows to extract
 
-	// Extract all three origins
-	string dps_full_three_origins = "";
-	for (int i = 0; i <= globalCounterAllOrigins; i++)
-	{
+    // Extract all three origins
+    string dps_full_three_origins = "";
+    for (int i = 0; i <= globalCounterAllOrigins; i++)
+    {
 
-		string dps_three_origins = "{x: new Date(2011, 12, 9), y: 22},"
-			.Replace("2011", temp_attribute_celcius_date[i].year)
-			.Replace("12", temp_attribute_celcius_date[i].month)
-			.Replace("9", temp_attribute_celcius_date[i].day)
-			.Replace("22", temp_attribute_celcius[i].temp);
+        string dps_three_origins = "{x: new Date(2011, 12, 9), y: 22},"
+            .Replace("2011", temp_attribute_celcius_date[i].year)
+            .Replace("12", temp_attribute_celcius_date[i].month)
+            .Replace("9", temp_attribute_celcius_date[i].day)
+            .Replace("22", temp_attribute_celcius[i].temp);
 
-		if (i == globalCounterAllOrigins)
-		{
-			dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
-			dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
-		}
+        if (i == globalCounterAllOrigins)
+        {
+            dps_three_origins = dps_three_origins.Remove(dps_three_origins.Length - 1);
+            dps_three_origins = dps_three_origins.Insert(dps_three_origins.Length, "]");
+        }
 
-		dps_full_three_origins += dps_three_origins;
-	}
+        dps_full_three_origins += dps_three_origins;
+    }
 
 	// Extract JFK origin
 	string dps_full_one_origin = "";
@@ -52,7 +53,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<script type="text/javascript">
+    <script type="text/javascript">
 		window.onload = function () {
 			var data_xAxisThreeOrigins = [
 				{ x: new Date(2013, 1, 1), y: null, label: "Jan 2013" },
@@ -133,8 +134,8 @@
 			});
 			chart2.render();
 	}
-	</script>
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
 	<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
