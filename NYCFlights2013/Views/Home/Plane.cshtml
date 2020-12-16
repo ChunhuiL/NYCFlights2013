@@ -158,17 +158,6 @@
     <section>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/echarts/echarts.js"></script>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="myechart" style="width: 100%; height: 500px;">
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
         <script type="text/javascript">
             var myEChart = echarts.init(document.getElementById('myechart'));
             var option = {
@@ -207,11 +196,12 @@
 
 
 
-<div>
+<div class="table">
+    <h1>The number of planes in each Airbus Model:</h1>
     <table class="table-bordered table-responsive">
         <tr class="table-active">
             <td>model</td>
-            <td>number</td>
+            <td>number of planes</td>
         </tr>
 
 
@@ -219,12 +209,12 @@
             {
                 <tr>
                     <td class="table-info">
-                        @num.model
+                        @num.manufacturer
                     </td>
 
 
                     <td>
-                        @num.number
+                        @num.numberOfPlanes
                     </td>
                 </tr>
             }
