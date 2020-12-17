@@ -1,5 +1,4 @@
 ﻿@{
-
 	ViewData["Title"] = "Weather Page";
 	@model NYCFlights2013.Models.Weather
 	var weather = (List<Weather>)ViewData["weather"];
@@ -164,9 +163,6 @@
             </table>
         </div>
     </center>
-
-
-
     <section class="content-header">
         <h3>Weather Observation Chart</h3>
     </section>
@@ -181,7 +177,6 @@
             </div>
         </div>
     </section>
-
     @{ List<string> listx = new List<string>();
         List<string> listy = new List<string>();
         foreach (var item in weatherObs)
@@ -220,7 +215,6 @@
 		};
         myEChart.setOption(option);
     </script>
-
     <hr style="height:4px;border-top:4px solid black" />
     <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
     <hr style="height:4px;border-top:4px solid black" />

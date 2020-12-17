@@ -14,7 +14,6 @@ namespace TestNYCFlights2013.ControllerTest
 		public void Setup()
 		{
 		}
-		//TODO: Write test assertions for each method.
 		[Test]
 		public void TestGetWeatherTemp()
 		{
@@ -26,13 +25,10 @@ namespace TestNYCFlights2013.ControllerTest
 			{
 				string originTest = tacTest.origin;
 				string tempTest = tacTest.temp;
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
 					if (originTest == "EWR" && tempTest == "3.89")
 					{
-						// Console.WriteLine(nameTest);
-						// Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}
@@ -52,13 +48,10 @@ namespace TestNYCFlights2013.ControllerTest
 				string dayTest = tacdTest.day;
 				string monthTest = tacdTest.month;
 				string yearTest = tacdTest.year;
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 12)
 				{
 					if (dayTest == "1" && monthTest == "1" && yearTest == "2013")
 					{
-						// Console.WriteLine(nameTest);
-						// Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}
@@ -81,14 +74,11 @@ namespace TestNYCFlights2013.ControllerTest
 				string monthTest = tacjTest.month;
 				string yearTest = tacjTest.year;
 				
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
 					if (originTest == "JFK" && tempTest == "3.89" && dayTest == "1"
 						&& monthTest == "1" && yearTest == "2013")
 					{
-						// Console.WriteLine(nameTest);
-						// Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}
@@ -110,14 +100,11 @@ namespace TestNYCFlights2013.ControllerTest
 				string monthTest = tadmTest.month;
 				string yearTest = tadmTest.year;
 				string meanTest = tadmTest.mean;
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
 					if (originTest == "EWR" && meanTest == "3.33" && dayTest == "6"
 						&& monthTest == "1" && yearTest == "2013")
 					{
-						// Console.WriteLine(nameTest);
-						// Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}
@@ -139,7 +126,6 @@ namespace TestNYCFlights2013.ControllerTest
 				string monthTest = tadmjTest.month;
 				string yearTest = tadmjTest.year;
 				string meanTest = tadmjTest.mean;
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 5)
 				{
 					if (originTest == "JFK" && meanTest == "3.06" && dayTest == "6"

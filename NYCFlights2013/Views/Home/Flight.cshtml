@@ -2,12 +2,12 @@
     ViewData["Title"] = "Flight Page";
     @model NYCFlights2013.Models.Flights
     var flights = (List<Flights>)ViewData["flights"];
-    var numOfFlightsM = (List<Flights>)ViewData["numOfFlightsM"];
-    var meantimeO = (List<Flights>)ViewData["meantimeO"];
-    var topdest = (List<Flights>)ViewData["topdest"];
-    var meandelay = (List<Flights>)ViewData["meandelay"];
-    var numOfFlightsO = (List<Flights>)ViewData["numOfFlightsO"];
-
+	var numOfFlightsM = (List<Flights>)ViewData["numOfFlightsM"];
+	var meantimeO = (List<Flights>)ViewData["meantimeO"];
+	var topdest = (List<Flights>)ViewData["topdest"];
+	var flightsToTop10Dest = (List<Flights>)ViewData["flightsToTop10Dest"];
+	var meandelay = (List<Flights>)ViewData["meandelay"];
+	var numOfFlightsO = (List<Flights>)ViewData["numOfFlightsO"];
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -314,62 +314,85 @@
             chart5.render();
         }
     </script>
-    
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-    <section class="content">
-        <div class="table">
-            <center><b>mean airtime of each of the origins:</b></center>
+	<section class="content">
+		<div class="table">
+			<center><b>Mean airtime of each of the origins:</b></center>
 
-            <table class="table-bordered table-responsive">
-                <tr class="table-active">
-                    <td>origin</td>
-                    <td>meantime</td>
-                </tr>
-                @{ foreach (var me in meantimeO)
-                    {
-                        <tr>
-                            <td class="table-info">
-                                @me.origin
-                            </td>
-                            <td>
-                                @me.meantime
-                            </td>
-                        </tr>
-                    }
-                }
-            </table>
-        </div>
-        <hr style="height:4px;border-top:4px solid black" />
-
-        <div class="table">
-            <center><b>Mean departure and arrival delay for each origin:</b></center>
-
-            <table class="table-bordered table-responsive">
-                <tr class="table-active">
-                    <td>origin</td>
-                    <td>delayD</td>
-                    <td>delayA</td>
-                </tr>
-                @{ foreach (var mea in meandelay)
-                    {
-                        <tr>
-                            <td class="table-info">
-                                @mea.origin
-                            </td>
-                            <td>
-                                @mea.delayD
-                            </td>
-                            <td>
-                                @mea.delayA
-                            </td>
-                        </tr>
-                    }
-                }
-            </table>
-        </div>
-    </section>
+			<table class="table-bordered table-responsive">
+				<tr class="table-active">
+					<td>origin</td>
+					<td>meantime</td>
+				</tr>
+				@{ foreach (var me in meantimeO)
+					{
+						<tr>
+							<td class="table-info">
+								@me.origin
+							</td>
+							<td>
+								@me.meantime
+							</td>
+						</tr>
+					}
+				}
+			</table>
+		</div>
+		<hr style="height:4px;border-top:4px solid black" />
+		<div class="table">
+			<center><b>Mean departure and arrival delay for each origin:</b></center>
+			<table class="table-bordered table-responsive">
+				<tr class="table-active">
+					<td>origin</td>
+					<td>delayD</td>
+					<td>delayA</td>
+				</tr>
+				@{ foreach (var mea in meandelay)
+					{
+						<tr>
+							<td class="table-info">
+								@mea.origin
+							</td>
+							<td>
+								@mea.delayD
+							</td>
+							<td>
+								@mea.delayA
+							</td>
+						</tr>
+					}
+				}
+			</table>
+		</div>
+		<hr style="height:4px;border-top:4px solid black" />
+		<div class="table">
+			<center><b>Number of flights from the three origins to the top-10 destination:</b></center>
+			<table class="table-bordered table-responsive">
+				<tr class="table-active">
+					<td>origin</td>
+					<td>dest</td>
+					<td>top10 flights #</td>
+				</tr>
+				@{ foreach (var top in flightsToTop10Dest)
+					{
+						<tr>
+							<td class="table-info">
+								@top.origin
+							</td>
+							<td>
+								@top.dest
+							</td>
+							<td>
+								@top.top10
+							</td>
+						</tr>
+					}
+				}
+			</table>
+		</div>
+	</section>
     <hr style="height:4px;border-top:4px solid black" />
 
     <div id="chartContainer1" style="height: 300px; width: 100%;"> </div>

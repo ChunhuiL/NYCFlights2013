@@ -22,6 +22,7 @@ namespace NYCFlights2013.Controllers
             var numOfFlightsM = GetNumOfFlightsM();
             var meantimeO = GetMeantimeO();
             var numOfFlightsO = GetNumOfFlightsO();
+            var flightsToTop10Dest = GetFlightsToTop10Dest();
             var meandelay = GetMeandelay();
             var topdest = GetTopdest();
             ViewData["meandelay"] = meandelay;
@@ -29,6 +30,7 @@ namespace NYCFlights2013.Controllers
             ViewData["numOfFlightsO"] = numOfFlightsO;
             ViewData["flights"] = flights;
             ViewData["numOfFlightsM"] = numOfFlightsM;
+            ViewData["flightsToTop10Dest"] = flightsToTop10Dest;
             ViewData["meantimeO"] = meantimeO;
             return View("~/Views/Home/Flight.cshtml");
 
@@ -85,7 +87,6 @@ namespace NYCFlights2013.Controllers
         public List<Flights> GetNumOfFlightsM()
         {
             List<Flights> numOfFlightsM = new List<Flights>();
-            //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
@@ -119,7 +120,6 @@ namespace NYCFlights2013.Controllers
         public List<Flights> GetMeantimeO()
         {
             List<Flights> meantimeO = new List<Flights>();
-            //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
@@ -153,7 +153,6 @@ namespace NYCFlights2013.Controllers
         public List<Flights> GetNumOfFlightsO()
         {
             List<Flights> numOfFlightsO = new List<Flights>();
-            //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
@@ -188,7 +187,6 @@ namespace NYCFlights2013.Controllers
         public List<Flights> GetTopdest()
         {
             List<Flights> topdest = new List<Flights>();
-            //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
@@ -219,10 +217,43 @@ namespace NYCFlights2013.Controllers
 
             return topdest;
         }
+
+        public List<Flights> GetFlightsToTop10Dest()
+        {
+            List<Flights> flightsToTop10 = new List<Flights>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT origin, dest, COUNT(dest) AS top10 FROM `flights` GROUP BY origin, dest ORDER BY origin, top10 DESC";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        flightsToTop10.Add(new Flights
+                        {
+                            origin = rdr[0].ToString(),
+                            dest = rdr[1].ToString(),
+                            top10 = rdr[2].ToString()
+                        });
+                    }
+                    rdr.Close();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return flightsToTop10;
+        }
+
         public List<Flights> GetMeandelay()
         {
             List<Flights> meandelay = new List<Flights>();
-            //            List<Flights> numOfFlightsM = new List<Flights>();
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connDB.GetConnectionString()))

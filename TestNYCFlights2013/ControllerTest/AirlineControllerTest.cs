@@ -43,7 +43,7 @@ namespace TestNYCFlights2013.ControllerTest
 				"Mesa Airlines Inc."
 			};
 
-			int counter = 0;
+			int counter;
 
 			Random rnd = new Random();
 

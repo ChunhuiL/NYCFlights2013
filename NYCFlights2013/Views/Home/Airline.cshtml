@@ -3,7 +3,6 @@
     @model NYCFlights2013.Models.Airlines
     var airlines = (List<Airlines>)ViewData["airlines"];
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,52 +10,37 @@
 </head>
 <body>
     <div class="text-center">
-
         <section class="content-header">
             <h1>Airlines</h1>
         </section>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <section class="content">
-
             <div class="table">
                 <table class="table-bordered table-responsive">
                     <tr class="table-active">
                         <td>Carrier</td>
                         <td>Name</td>
                     </tr>
-
-
                     @{ foreach (var air in airlines)
                         {
                             <tr>
                                 <td class="table-info">
                                     @air.carrier
                                 </td>
-
-
                                 <td>
                                     @air.name
                                 </td>
                             </tr>
                         }
-                        // TODO: Complete table.
                     }
-
-
                 </table>
-
             </div>
         </section>
-
-
-
-
         @*<style>        #tableData {
                     border: solid;
                     border-color: black;
                 }
             </style>*@
-
     </div>
     </body>
 </html>

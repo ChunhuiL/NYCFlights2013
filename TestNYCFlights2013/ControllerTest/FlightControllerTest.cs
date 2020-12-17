@@ -14,7 +14,6 @@ namespace TestNYCFlights2013.ControllerTest
 		public void Setup()
 		{
 		}
-		//TODO: Write test assertions for each method.
 		[Test]
 		public void TestGetNumOfFlightsM()
 		{
@@ -26,13 +25,10 @@ namespace TestNYCFlights2013.ControllerTest
 			{
 				string monthTest = numTest.month;
 				string numberTest = numTest.number;
-				// Check to see if value number 12 contains US Airways Inc with carrier value "US".
 				if (counter == 4)
 				{
 					if (monthTest == "5" && numberTest == "13692")
 					{
-						// Console.WriteLine(nameTest);
-						// Console.WriteLine(carrierTest);
 						Assert.Pass();
 					}
 				}

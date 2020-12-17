@@ -14,7 +14,6 @@ namespace TestNYCFlights2013.ControllerTest
 		public void Setup()
 		{
 		}
-		//TODO: Write test assertions for each method.
 
 		[Test]
 		public void TestGetNumOfManufacture()

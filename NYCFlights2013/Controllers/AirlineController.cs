@@ -56,7 +56,5 @@ namespace NYCFlights2013.Controllers
             }
             return airlines;
         }
-
-
     }
 }

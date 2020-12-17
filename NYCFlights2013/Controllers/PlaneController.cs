@@ -26,7 +26,6 @@ namespace NYCFlights2013.Controllers
             return View("~/Views/Home/Plane.cshtml");
 
         }
-
         public List<Planes> GetPlanesNumM()
         {
             var planesNumM = new List<Planes>();
@@ -139,7 +138,6 @@ namespace NYCFlights2013.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return numberOfFlMan;
-
         }
         
     }

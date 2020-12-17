@@ -38,7 +38,6 @@ namespace NYCFlights2013.Controllers
             ViewData["weatherObs"] = weatherObs;
 
             return View("~/Views/Home/Weather.cshtml");
-
         }
 
         public List<Weather> GetAllWeather()
