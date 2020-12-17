@@ -11,7 +11,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<script type="text/javascript">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript">
         window.onload = function () {
             var chart1 = new CanvasJS.Chart("chartContainer1",
                 {
@@ -312,11 +313,16 @@
                 });
             chart5.render();
         }
-	</script>
+    </script>
+    
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
     <section class="content">
-        <div>
+        <div class="table">
+            <center><b>mean airtime of each of the origins:</b></center>
+
             <table class="table-bordered table-responsive">
-                <center><b>mean airtime of each of the origins:</b></center>
                 <tr class="table-active">
                     <td>origin</td>
                     <td>meantime</td>
@@ -334,8 +340,13 @@
                     }
                 }
             </table>
+        </div>
+        <hr style="height:4px;border-top:4px solid black" />
+
+        <div class="table">
+            <center><b>Mean departure and arrival delay for each origin:</b></center>
+
             <table class="table-bordered table-responsive">
-                <center><b>Mean departure and arrival delay for each origin:</b></center>
                 <tr class="table-active">
                     <td>origin</td>
                     <td>delayD</td>
@@ -359,14 +370,23 @@
             </table>
         </div>
     </section>
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</head>
-<body>
-	<div id="chartContainer1" style="height: 300px; width: 100%;"> </div>
-	<div id="chartContainer2" style="height: 300px; width: 100%;"> </div>
-	<div id="chartContainer3" style="height: 300px; width: 100%;"> </div>
-	<div id="chartContainer4" style="height: 300px; width: 100%;"> </div>
-	<div id="chartContainer5" style="height: 300px; width: 100%;"> </div>
+    <hr style="height:4px;border-top:4px solid black" />
+
+    <div id="chartContainer1" style="height: 300px; width: 100%;"> </div>
+    <hr style="height:4px;border-top:4px solid black" />
+
+    <div id="chartContainer2" style="height: 300px; width: 100%;"> </div>
+    <hr style="height:4px;border-top:4px solid black" />
+
+    <div id="chartContainer3" style="height: 300px; width: 100%;"> </div>
+    <hr style="height:4px;border-top:4px solid black" />
+
+    <div id="chartContainer4" style="height: 300px; width: 100%;"> </div>
+    <hr style="height:4px;border-top:4px solid black" />
+
+    <div id="chartContainer5" style="height: 300px; width: 100%;"> </div>
+    <hr style="height:4px;border-top:4px solid black" />
+
 </body>
 </html>
 }

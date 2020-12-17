@@ -6,49 +6,55 @@
     var numberOfF = (List<Planes>)ViewData["numberOfF1"];
 
 }
-<div class="text-center">
-    <h1 class="display-4">Planes</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Planes</h1>
 
-    <section>
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/echarts/echarts.js"></script>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="myechart1" style="width: 100%; height: 500px;">
+        <section>
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/echarts/echarts.js"></script>
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="myechart1" style="width: 100%; height: 500px;">
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        @{
-            List<string> listx = new List<string>();
-            List<string> listy = new List<string>();
-            List<string> listz = new List<string>();
-            List<string> listf = new List<string>();
-            foreach (var item in numberOfManu)
-            {
-                listx.Add(item.manufacturer);
+            @{
+                List<string> listx = new List<string>();
+                List<string> listy = new List<string>();
+                List<string> listz = new List<string>();
+                List<string> listf = new List<string>();
+                foreach (var item in numberOfManu)
+                {
+                    listx.Add(item.manufacturer);
+                }
+                foreach (var item in numberOfManu)
+                {
+                    listy.Add(item.numberOfM);
+                }
+                foreach (var item in numberOfF)
+                {
+                    listz.Add(item.numberOfF);
+                }
+                foreach (var item in numberOfF)
+                {
+                    listf.Add(item.manufacturer);
+                }
+
+
             }
-            foreach (var item in numberOfManu)
-            {
-                listy.Add(item.numberOfM);
-            }
-            foreach (var item in numberOfF)
-            {
-                listz.Add(item.numberOfF);
-            }
-            foreach (var item in numberOfF)
-            {
-                listf.Add(item.manufacturer);
-            }
 
 
-        }
-
-
-        <script type="text/javascript">
+            <script type="text/javascript">
 
             var myEChart1 = echarts.init(document.getElementById('myechart1'));
             var option = {
@@ -80,79 +86,83 @@
                 }]
             };
             myEChart1.setOption(option);</script>
-    </section>
+        </section>
 
-</div>
-<center>
-    <div class="table">
-        <table class="table-bordered table-responsive">
-            <tr class="table-active">
+    </div>
+    <center>
 
-                <td>Manufacture</td>
-                <td>Number of Models</td>
-            </tr>
+        <div class="table">
+            <table class="table-bordered table-responsive">
+                <tr class="table-active">
 
-
-            @{ foreach (var num in numberOfManu)
-                {
-                    <tr>
-                        <td class="table-info">
-                            @num.manufacturer
-                        </td>
+                    <td>Manufacture</td>
+                    <td>Number of Models</td>
+                </tr>
 
 
-                        <td>
-                            @num.numberOfM
-                        </td>
-                    </tr>
+                @{ foreach (var num in numberOfManu)
+                    {
+                        <tr>
+                            <td class="table-info">
+                                @num.manufacturer
+                            </td>
+
+
+                            <td>
+                                @num.numberOfM
+                            </td>
+                        </tr>
+                    }
                 }
-            }
 
 
-        </table>
+            </table>
 
-    </div>
-</center>
+        </div>
+        <hr style="height:4px;border-top:4px solid black" />
 
-
-<p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-<center>
-    <div id="myechart" style="width: 100%; height: 500px;">
-
-    </div>
-    <div class="table">
-        <table class="table-bordered table-responsive">
-            <tr class="table-active">
-
-                <td>Manufacture</td>
-                <td>Number of Flights</td>
-            </tr>
+    </center>
 
 
-            @{ foreach (var item in numberOfF)
-                {
-                    <tr>
-                        <td class="table-info">
-                            @item.manufacturer
-                        </td>
+    <center>
+
+        <div id="myechart" style="width: 100%; height: 500px;">
+
+        </div>
+
+        <div class="table">
+            <table class="table-bordered table-responsive">
+                <tr class="table-active">
+
+                    <td>Manufacture</td>
+                    <td>Number of Flights</td>
+                </tr>
 
 
-                        <td>
-                            @item.numberOfF
-                        </td>
-                    </tr>
+                @{ foreach (var item in numberOfF)
+                    {
+                        <tr>
+                            <td class="table-info">
+                                @item.manufacturer
+                            </td>
+
+
+                            <td>
+                                @item.numberOfF
+                            </td>
+                        </tr>
+                    }
                 }
-            }
 
 
-        </table>
+            </table>
 
-    </div>
+        </div>
 
-    <section>
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/echarts/echarts.js"></script>
-        <script type="text/javascript">
+        <section>
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/echarts/echarts.js"></script>
+            <script type="text/javascript">
             var myEChart = echarts.init(document.getElementById('myechart'));
             var option = {
                 title: {
@@ -183,40 +193,43 @@
                 }]
             };
             myEChart.setOption(option);</script>
-    </section>
-</center>
+        </section>
+    </center>
 
 
 
 
+    <hr style="height:4px;border-top:4px solid black" />
 
-<div class="table">
-    <h1>The number of planes in each Airbus Model:</h1>
-    <table class="table-bordered table-responsive">
-        <tr class="table-active">
-            <td>model</td>
-            <td>number of planes</td>
-        </tr>
-
-
-        @{ foreach (var num in planesNumM)
-            {
-                <tr>
-                    <td class="table-info">
-                        @num.manufacturer
-                    </td>
+    <div class="table">
+        <h1>The number of planes in each Airbus Model:</h1>
+        <table class="table-bordered table-responsive">
+            <tr class="table-active">
+                <td>model</td>
+                <td>number of planes</td>
+            </tr>
 
 
-                    <td>
-                        @num.numberOfPlanes
-                    </td>
-                </tr>
+            @{ foreach (var num in planesNumM)
+                {
+                    <tr>
+                        <td class="table-info">
+                            @num.manufacturer
+                        </td>
+
+
+                        <td>
+                            @num.numberOfPlanes
+                        </td>
+                    </tr>
+                }
+                // TODO: Complete table.
             }
-            // TODO: Complete table.
-        }
 
 
-    </table>
+        </table>
 
-</div>
-    
+    </div>
+
+</body>
+</html>
