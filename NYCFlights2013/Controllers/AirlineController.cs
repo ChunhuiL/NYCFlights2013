@@ -14,18 +14,12 @@ namespace NYCFlights2013.Controllers
     public class AirlineController : Controller
     {
 		ConnectionDB connDB = new ConnectionDB();
-
-
         public IActionResult Index()
         {
-             
             var airlines = GetAllAirlines();
-
             ViewData["airlines"] = airlines;
             return View("~/Views/Home/Airline.cshtml");
-
         }
-
         public List<Airlines> GetAllAirlines()
         {
             var airlines = new List<Airlines>();
